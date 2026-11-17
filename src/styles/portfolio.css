@@ -443,3 +443,29 @@ body.portfolio { margin: 0; color: var(--ink); background: var(--paper); font-fa
 .profile-resources { display:flex; flex-wrap:wrap; align-items:center; gap:10px 20px; margin-top:20px; font-size:11px; color:var(--muted); }
 .profile-resources a { min-height:44px; display:inline-flex; align-items:center; color:var(--accent); }
 .profile-pending { font-size:12px; margin-top:12px; color:var(--muted); }
+/* Native scrollbars: square pixel grip, theme-aware track, no scroll interception. */
+html:has(body.portfolio), .portfolio * {
+  scrollbar-color: var(--accent) var(--surface);
+  scrollbar-width: auto;
+}
+@supports selector(::-webkit-scrollbar) {
+  html:has(body.portfolio), .portfolio * { scrollbar-color: auto; }
+  html:has(body.portfolio)::-webkit-scrollbar, .portfolio *::-webkit-scrollbar { width: 14px; height: 14px; }
+  html:has(body.portfolio)::-webkit-scrollbar-track, .portfolio *::-webkit-scrollbar-track {
+    background: repeating-linear-gradient(0deg, var(--surface) 0 6px, var(--paper) 6px 8px);
+    border-inline: 1px solid var(--line);
+  }
+  html:has(body.portfolio)::-webkit-scrollbar-thumb, .portfolio *::-webkit-scrollbar-thumb {
+    border: 3px solid var(--surface); border-radius: 0; min-height: 40px;
+    background: repeating-linear-gradient(0deg, var(--accent) 0 7px, var(--ink) 7px 9px);
+    box-shadow: inset 1px 1px 0 var(--paper), inset -1px -1px 0 var(--ink);
+  }
+  html:has(body.portfolio)::-webkit-scrollbar-thumb:hover, .portfolio *::-webkit-scrollbar-thumb:hover { background: var(--ink); }
+  html:has(body.portfolio)::-webkit-scrollbar-corner, .portfolio *::-webkit-scrollbar-corner { background: var(--surface); }
+}
+@media(pointer:coarse) {
+  html:has(body.portfolio)::-webkit-scrollbar, .portfolio *::-webkit-scrollbar { width: 8px; height: 8px; }
+}
+@media(forced-colors:active) {
+  html:has(body.portfolio), .portfolio * { scrollbar-color: auto; }
+}
