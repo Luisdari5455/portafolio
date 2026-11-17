@@ -1,0 +1,13 @@
+---
+// Line drawing of a page skeleton: the same sheets that form the hero 3D stack.
+import { SHEET_RATIO, sheetLayouts } from '../data/sheet-layouts';
+interface Props { index: number; }
+const { index } = Astro.props;
+const layout = sheetLayouts[index % sheetLayouts.length];
+const W = 160;
+const H = W / SHEET_RATIO;
+---
+<svg class="thumb-sketch" viewBox={`0 0 ${W} ${H}`} fill="none" stroke="currentColor" stroke-width="1" vector-effect="non-scaling-stroke" aria-hidden="true">
+  {layout.lines.map(([x0, y0, x1, y1]) => <line x1={x0 * W} y1={y0 * H} x2={x1 * W} y2={y1 * H} vector-effect="non-scaling-stroke" />)}
+  {layout.boxes.map(([x0, y0, x1, y1]) => <rect x={x0 * W} y={y0 * H} width={(x1 - x0) * W} height={(y1 - y0) * H} vector-effect="non-scaling-stroke" />)}
+</svg>

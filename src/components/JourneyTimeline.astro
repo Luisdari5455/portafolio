@@ -1,0 +1,138 @@
+﻿---
+import { Ticket, ShoppingBag, Wrench, Boxes, GraduationCap, CalendarDays, Check, Braces } from '@lucide/astro';
+import { timeline } from '../data/experience';
+const icons = [Ticket, ShoppingBag, Wrench, Boxes, GraduationCap];
+// Original 12 × 16 explorer: dark hair, orange jacket and a small backpack.
+const sprite = ['000111110000','001111111000','001222121000','000222220000','000022200000','005333335000','055333335500','025333335200','002333332000','000333330000','000444440000','000440440000','000440440000','000440440000','001110111000','001110111000'];
+const colors: Record<string, string> = { '1': 'var(--ink)', '2': 'light-dark(#d8a47c, #edbd94)', '3': 'var(--accent)', '4': 'light-dark(#596c79, #8ea9b8)', '5': 'light-dark(#8b7865, #c4aa8c)' };
+---
+<section id="trayectoria" class="section section-wide journey-section" aria-labelledby="timeline-title" data-journey>
+  <header class="section-head"><h2 class="section-title" id="timeline-title">Trayectoria</h2><p>Experiencia profesional y formación.</p></header>
+  <div class="journey-layout">
+    <aside class="journey-scene" aria-hidden="true">
+      <div class="scene-caption"><span>LC / NEXT LEVEL</span><Braces size={18} stroke-width={1.3} /></div>
+      <svg class="journey-world" viewBox="0 0 300 310" fill="none" focusable="false">
+        <g class="world-distant" stroke="var(--line)" stroke-width="1"><path d="M0 200 65 130 120 182 205 72 300 160"/><path d="M0 218 90 168 155 200 260 110 300 140"/><path d="M34 80h30m-15-15v30M236 44h12m-6-6v12" stroke="var(--accent)"/><rect x="100" y="54" width="8" height="8"/><rect x="270" y="182" width="6" height="6"/></g>
+        <g class="world-middle" fill="var(--surface)" stroke="var(--line)"><path d="M15 275v-35h38v-34h38v-34h38v-34h38v-34h46v171Z"/><path d="M33 285v-35h38v-34h38v-34h38v-34h38v-34h46v171Z" fill="var(--paper)"/></g>
+        <g class="world-platforms">{Array.from({ length: 5 }, (_, i) => <g><path d={`M${32+i*38} ${255-i*34}h38l9 8h-38Z`} fill="var(--surface)" stroke="var(--ink)"/><path d={`M${70+i*38} ${255-i*34}l9 8v15l-9-8Z`} fill="var(--line)" stroke="var(--ink)"/><rect x={32+i*38} y={255-i*34} width="38" height="15" fill="var(--paper)" stroke="var(--ink)"/><path d={`M${39+i*38} ${261-i*34}h9m4 0h9`} stroke="var(--line)"/><rect class="step-beacon" data-step-beacon={i} x={48+i*38} y={282-i*34} width="4" height="4" fill="var(--muted)"/></g>)}</g>
+        <g class="pixel-explorer" data-explorer transform="translate(38 223)">
+          {sprite.flatMap((row, y) => [...row].map((cell, x) => cell !== '0' && <rect x={x*2} y={y*2} width="2" height="2" fill={colors[cell]} />))}
+        </g>
+        <g transform="translate(234 86)" stroke="var(--accent)"><path d="M0 0v48" stroke-width="2"/><path d="M1 0h26v19H1" fill="var(--surface)"/><path d="m7 9 4 4 8-8" stroke-width="2"/></g>
+        <g class="world-front" stroke="var(--line)"><path d="M4 296h292M17 301h36m12 0h40m62 0h66"/><path d="M13 288v-12m-5 6h10M274 285v-18m-7 9h14" stroke="var(--accent)"/></g>
+      </svg>
+      <div class="scene-bottom"><span>Un paso a la vez.</span><span>SCROLL ↓</span></div>
+    </aside>
+    <ol class="journey-cards">
+      {timeline.map((entry, index) => {
+        const Icon = icons[index] ?? Braces;
+        return <li class="journey-entry" data-journey-entry>
+          <span class="journey-backplate" aria-hidden="true"></span>
+          <article class="journey-card">
+            <div class="journey-meta"><span><CalendarDays size={14} stroke-width={1.5} />{entry.period}</span><span>{entry.kind}</span></div>
+            <div class="journey-title"><span class="journey-icon" aria-hidden="true"><Icon size={26} stroke-width={1.4} /></span><div><h3>{entry.title}</h3><p class="journey-role">{entry.subtitle}</p></div></div>
+            <p class="journey-summary">{entry.summary}</p>
+            {entry.highlights && <ul class="journey-highlights">{entry.highlights.map(item => <li><Check size={14} stroke-width={1.5} aria-hidden="true" /><span>{item}</span></li>)}</ul>}
+            {entry.stack && <ul class="tag-list" aria-label="Tecnologías">{entry.stack.map(item => <li>{item}</li>)}</ul>}
+            <span class="journey-index" aria-hidden="true">{String(index + 1).padStart(2, '0')} / {String(timeline.length).padStart(2, '0')}</span>
+          </article>
+        </li>;
+      })}
+    </ol>
+  </div>
+</section>
+<script>
+  const journey = document.querySelector<HTMLElement>('[data-journey]');
+  if (journey) {
+    const explorer = journey.querySelector<SVGGElement>('[data-explorer]');
+    const entries = [...journey.querySelectorAll<HTMLElement>('[data-journey-entry]')];
+    const beacons = [...journey.querySelectorAll<SVGRectElement>('[data-step-beacon]')];
+    const motion = matchMedia('(prefers-reduced-motion: no-preference)');
+    let frame = 0;
+    function update() {
+      frame = 0;
+      if (!journey || document.hidden || !motion.matches) return;
+      const bounds = journey.getBoundingClientRect();
+      const height = innerHeight;
+      if (bounds.top > height || bounds.bottom < 0) return;
+      const first = entries[0]?.getBoundingClientRect();
+      const last = entries.at(-1)?.getBoundingClientRect();
+      if (!first || !last) return;
+      const travel = Math.max(1, last.top - first.top);
+      const progress = Math.max(0, Math.min(1, (height * .5 - first.top) / travel));
+      const step = progress * 4;
+      const base = Math.min(3, Math.floor(step));
+      const phase = step - base;
+      // Each step has a horizontal approach followed by a short upward hop.
+      const x = 38 + step * 38;
+      const rise = phase * phase * (3 - 2 * phase);
+      const y = 223 - (base + rise) * 34 - Math.sin(phase * Math.PI) * 11;
+      const depths = entries.map(entry => {
+        const rect = entry.getBoundingClientRect();
+        return Math.max(-1, Math.min(1, (height * .5 - rect.top - rect.height / 2) / height));
+      });
+      explorer?.setAttribute('transform', `translate(${x.toFixed(1)} ${y.toFixed(1)})`);
+      journey.style.setProperty('--world-depth', `${((progress - .5) * 38).toFixed(1)}px`);
+      entries.forEach((entry, i) => entry.style.setProperty('--card-depth', `${(depths[i] * 18).toFixed(1)}px`));
+      beacons.forEach((beacon, i) => beacon.setAttribute('fill', i <= Math.round(step) ? 'var(--accent)' : 'var(--line)'));
+    }
+    const request = () => { if (!frame && motion.matches && !document.hidden) frame = requestAnimationFrame(update); };
+    const reset = () => {
+      cancelAnimationFrame(frame); frame = 0;
+      explorer?.setAttribute('transform', 'translate(38 223)');
+      journey.style.removeProperty('--world-depth');
+      entries.forEach(entry => entry.style.removeProperty('--card-depth'));
+      beacons.forEach(beacon => beacon.setAttribute('fill', 'var(--muted)'));
+      request();
+    };
+    window.addEventListener('scroll', request, { passive: true });
+    window.addEventListener('resize', request);
+    document.addEventListener('visibilitychange', reset);
+    motion.addEventListener('change', reset);
+    new ResizeObserver(request).observe(journey);
+    request();
+  }
+</script>
+<style>
+  .journey-layout { display: grid; grid-template-columns: minmax(220px, .65fr) minmax(0, 1.35fr); gap: clamp(40px, 6vw, 110px); align-items: start; margin-top: 55px; }
+  .journey-scene { position: sticky; top: calc(var(--nav-height) + 50px); max-width: 480px; width: 100%; }
+  .scene-caption, .scene-bottom { display: flex; align-items: center; justify-content: space-between; gap: 12px; font: 10px monospace; letter-spacing: 1px; color: var(--muted); }
+  .scene-caption { padding-bottom: 18px; border-bottom: 1px solid var(--line); }.scene-caption svg { color: var(--accent); }
+  .journey-world { display: block; width: 100%; height: auto; max-height: 63svh; margin-block: 20px; overflow: visible; }
+  .pixel-explorer { shape-rendering: crispEdges; }
+  .world-distant { transform: translateY(calc(var(--world-depth, 0px) * -.6)); }
+  .world-middle { transform: translateY(calc(var(--world-depth, 0px) * .2)); }
+  .world-front { transform: translateY(calc(var(--world-depth, 0px) * .4)); }
+  .scene-bottom { padding-top: 16px; border-top: 1px dashed var(--line); font-size: 9px; }
+  .journey-cards { display: grid; gap: 56px; padding-right: 14px; }
+  .journey-entry { position: relative; isolation: isolate; }
+  .journey-backplate { position: absolute; inset: 6px -9px -6px 9px; background: var(--surface); border: 1px solid var(--line); border-radius: 5px; transform: translateY(calc(var(--card-depth, 0px) * -1)); z-index: -1; }
+  .journey-backplate::before { content: ''; position: absolute; inset: 6px -6px -6px 6px; border: 1px dashed var(--line); z-index: -1; }
+  .journey-card { padding: clamp(22px, 3vw, 40px); border: 1px solid var(--line); background: var(--paper); border-radius: 5px; box-shadow: 0 8px 24px light-dark(#30201006, #00000010); position: relative; }
+  .journey-meta { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px 16px; color: var(--muted); font-size: 12px; margin-bottom: 24px; }
+  .journey-meta > span:first-child { display: flex; align-items: center; gap: 8px; }
+  .journey-title { display: flex; align-items: flex-start; gap: 16px; }
+  .journey-icon { display: grid; place-items: center; width: 48px; height: 48px; flex-shrink: 0; border: 1px solid var(--accent); color: var(--accent); background: var(--surface); border-radius: 4px; box-shadow: 4px 4px 0 var(--line); }
+  .journey-title h3 { font-size: clamp(21px, 2.2vw, 30px); font-weight: 600; letter-spacing: -.025em; line-height: 1.2; }
+  .journey-role { margin-top: 6px; font-size: 13px; color: var(--muted); }
+  .journey-summary { margin-top: 23px; font-size: 16px; }
+  .journey-highlights { display: grid; gap: 10px; margin-top: 18px; }
+  .journey-highlights li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--muted); }
+  .journey-highlights svg { color: var(--accent); margin-top: 4px; flex-shrink: 0; }
+  .journey-index { display: block; text-align: right; font: 9px monospace; letter-spacing: 1px; color: var(--muted); margin-top: 20px; }
+  @media(max-width: 860px), (max-height: 600px) {
+    .journey-layout { grid-template-columns: 1fr; gap: 35px; margin-top: 28px; }
+    .journey-scene { position: static; max-width: 300px; margin-inline: auto; }
+    .journey-world { max-height: 260px; }
+    .journey-cards { gap: 35px; padding-right: 12px; }
+    .journey-backplate { transform: translateY(calc(var(--card-depth, 0px) * -.4)); }
+  }
+  @media(max-width: 860px) and (min-height: 601px) {
+    .journey-layout { display: block; }
+    .journey-scene { position: sticky; top: calc(var(--nav-height) + 4px); z-index: 3; max-width: none; margin-bottom: 28px; background: var(--paper); border: 1px solid var(--line); border-radius: 4px; padding: 8px 12px; }
+    .journey-world { height: 120px; width: 100%; margin: 0; }
+    .scene-caption, .scene-bottom { display: none; }
+  }
+  @media(max-width: 580px) { .journey-card { padding: 22px 18px; } .journey-title { gap: 12px; } .journey-icon { width: 38px; height: 38px; } .journey-summary { font-size: 15px; } .journey-highlights li { font-size: 13px; } }
+  @media(prefers-reduced-motion:reduce) { .world-distant, .world-middle, .world-front, .journey-backplate { transform: none; } }
+</style>

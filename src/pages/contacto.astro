@@ -1,0 +1,573 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { Mail, MapPin, MessageCircle, Phone } from '@lucide/astro';
+
+const contactMethods = [
+  {
+    icon: Mail,
+    title: 'Email',
+    value: 'info@innovatech.com',
+    link: 'mailto:info@innovatech.com'
+  },
+  {
+    icon: Phone,
+    title: 'Teléfono',
+    value: '+1 (555) 123-4567',
+    link: 'tel:+15551234567'
+  },
+  {
+    icon: MessageCircle,
+    title: 'WhatsApp',
+    value: '+1 (555) 123-4567',
+    link: 'https://wa.me/15551234567'
+  },
+  {
+    icon: MapPin,
+    title: 'Ubicación',
+    value: 'Silicon Valley, CA',
+    link: '#'
+  },
+];
+---
+
+<MainLayout 
+  title="Contacto"
+  description="Ponte en contacto con INNOVATECH GLOBAL SOLUTIONS"
+>
+  <Header />
+  
+  <main>
+    <!-- Page Header -->
+    <section class="page-header">
+      <div class="container">
+        <h1 class="page-title">Contáctanos</h1>
+        <p class="page-description">
+          Estamos aquí para ayudarte a hacer realidad tu proyecto
+        </p>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section contact-section">
+      <div class="container">
+        <div class="contact-grid">
+          <!-- Contact Form -->
+          <div class="contact-form-container">
+            <h2>Envíanos un Mensaje</h2>
+            <p class="form-description">
+              Completa el formulario y nos pondremos en contacto contigo en menos de 24 horas
+            </p>
+            
+            <form class="contact-form" id="contactForm">
+              <div class="form-group">
+                <label for="name">Nombre Completo *</label>
+                <input 
+                  type="text" 
+                  id="name" 
+                  name="name" 
+                  required 
+                  placeholder="Tu nombre"
+                  class="form-input"
+                />
+              </div>
+              
+              <div class="form-group">
+                <label for="email">Email *</label>
+                <input 
+                  type="email" 
+                  id="email" 
+                  name="email" 
+                  required 
+                  placeholder="tu@email.com"
+                  class="form-input"
+                />
+              </div>
+              
+              <div class="form-group">
+                <label for="company">Empresa</label>
+                <input 
+                  type="text" 
+                  id="company" 
+                  name="company" 
+                  placeholder="Nombre de tu empresa"
+                  class="form-input"
+                />
+              </div>
+              
+              <div class="form-group">
+                <label for="phone">Teléfono</label>
+                <input 
+                  type="tel" 
+                  id="phone" 
+                  name="phone" 
+                  placeholder="+1 (555) 123-4567"
+                  class="form-input"
+                />
+              </div>
+              
+              <div class="form-group">
+                <label for="service">Servicio de Interés *</label>
+                <select id="service" name="service" required class="form-input">
+                  <option value="">Selecciona un servicio</option>
+                  <option value="web">Desarrollo Web</option>
+                  <option value="mobile">Desarrollo Móvil</option>
+                  <option value="cloud">Soluciones Cloud</option>
+                  <option value="ai">IA & Machine Learning</option>
+                  <option value="security">Ciberseguridad</option>
+                  <option value="consulting">Consultoría IT</option>
+                  <option value="other">Otro</option>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                <label for="budget">Presupuesto Estimado</label>
+                <select id="budget" name="budget" class="form-input">
+                  <option value="">Selecciona un rango</option>
+                  <option value="10k">$10,000 - $25,000</option>
+                  <option value="25k">$25,000 - $50,000</option>
+                  <option value="50k">$50,000 - $100,000</option>
+                  <option value="100k">$100,000+</option>
+                  <option value="undefined">Por definir</option>
+                </select>
+              </div>
+              
+              <div class="form-group full-width">
+                <label for="message">Mensaje *</label>
+                <textarea 
+                  id="message" 
+                  name="message" 
+                  required 
+                  rows="6"
+                  placeholder="Cuéntanos sobre tu proyecto..."
+                  class="form-input"
+                ></textarea>
+              </div>
+              
+              <button type="submit" class="btn btn-primary btn-lg">
+                Enviar Mensaje
+              </button>
+              
+              <p class="form-note">
+                * Campos obligatorios
+              </p>
+            </form>
+          </div>
+          
+          <!-- Contact Info -->
+          <div class="contact-info">
+            <h2>Información de Contacto</h2>
+            
+            <div class="contact-methods">
+              {contactMethods.map((method) => (
+                <a href={method.link} class="contact-method card">
+                  <div class="method-icon"><method.icon size={28} stroke-width={1.75} /></div>
+                  <div class="method-content">
+                    <div class="method-title">{method.title}</div>
+                    <div class="method-value">{method.value}</div>
+                  </div>
+                </a>
+              ))}
+            </div>
+            
+            <div class="office-hours card">
+              <h3>Horario de Atención</h3>
+              <div class="hours-list">
+                <div class="hours-item">
+                  <span>Lunes - Viernes</span>
+                  <span>9:00 AM - 6:00 PM</span>
+                </div>
+                <div class="hours-item">
+                  <span>Sábados</span>
+                  <span>10:00 AM - 2:00 PM</span>
+                </div>
+                <div class="hours-item">
+                  <span>Domingos</span>
+                  <span>Cerrado</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="social-section card">
+              <h3>Síguenos</h3>
+              <div class="social-links">
+                <a href="#" class="social-btn">LinkedIn</a>
+                <a href="#" class="social-btn">Twitter</a>
+                <a href="#" class="social-btn">GitHub</a>
+                <a href="#" class="social-btn">Instagram</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section faq-section">
+      <div class="container">
+        <h2 class="section-title text-center">Preguntas Frecuentes</h2>
+        
+        <div class="faq-grid">
+          <div class="faq-item card">
+            <h3>¿Cuánto tiempo toma un proyecto?</h3>
+            <p>El tiempo varía según la complejidad, pero típicamente un proyecto completo toma entre 2-6 meses desde el inicio hasta el lanzamiento.</p>
+          </div>
+          
+          <div class="faq-item card">
+            <h3>¿Trabajan con startups?</h3>
+            <p>¡Absolutamente! Trabajamos con empresas de todos los tamaños, desde startups hasta corporaciones Fortune 500.</p>
+          </div>
+          
+          <div class="faq-item card">
+            <h3>¿Ofrecen soporte post-lanzamiento?</h3>
+            <p>Sí, ofrecemos planes de mantenimiento y soporte continuo para asegurar que tu solución siga funcionando perfectamente.</p>
+          </div>
+          
+          <div class="faq-item card">
+            <h3>¿Pueden trabajar con mi equipo actual?</h3>
+            <p>Sí, podemos integrarnos con tu equipo existente o trabajar de forma completamente independiente según tus necesidades.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <Footer />
+</MainLayout>
+
+<style>
+  main {
+    margin-top: 70px;
+  }
+
+  .page-header {
+    background: linear-gradient(135deg, var(--color-bg-dark), var(--color-bg-dark-alt));
+    color: white;
+    padding: var(--spacing-xl) 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(
+      circle,
+      rgba(255, 189, 89, 0.2) 0%,
+      transparent 70%
+    );
+    animation: pulse-slow 6s infinite;
+    transform: translate(-50%, -50%);
+  }
+  
+  .page-title {
+    color: white;
+    font-size: 3rem;
+    margin-bottom: var(--spacing-sm);
+    text-shadow: 0 0 30px rgba(255, 189, 89, 0.6);
+    position: relative;
+    z-index: 1;
+  }
+  
+  .page-description {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.95);
+    max-width: 700px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .contact-section {
+    background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
+  }
+  
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: var(--spacing-lg);
+  }
+  
+  .contact-form-container h2 {
+    font-size: 2rem;
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .form-description {
+    color: var(--color-text-light);
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .contact-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group.full-width {
+    grid-column: 1 / -1;
+  }
+  
+  .form-group label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--color-text);
+  }
+  
+  .form-input {
+    padding: 0.875rem 1rem;
+    border: 2px solid rgba(255, 189, 89, 0.2);
+    border-radius: var(--border-radius-md);
+    font-size: 1rem;
+    font-family: var(--font-main);
+    transition: all var(--transition-fast);
+    background: rgba(255, 255, 255, 0.8);
+  }
+  
+  .form-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(255, 189, 89, 0.1);
+    background: white;
+    transform: translateY(-1px);
+  }
+
+  .form-input:hover {
+    border-color: rgba(255, 189, 89, 0.4);
+  }
+  
+  textarea.form-input {
+    resize: vertical;
+  }
+  
+  .contact-form button {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+  
+  .form-note {
+    grid-column: 1 / -1;
+    font-size: 0.875rem;
+    color: var(--color-text-light);
+    margin-top: -0.5rem;
+  }
+  
+  .btn-lg {
+    padding: 1.125rem 2.5rem;
+    font-size: 1.125rem;
+  }
+  
+  .contact-info h2 {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .contact-methods {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .contact-method {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    text-decoration: none;
+    transition: all var(--transition-base);
+    border-radius: var(--border-radius-md);
+    border: 1px solid rgba(255, 189, 89, 0.1);
+  }
+  
+  .contact-method:hover {
+    transform: translateX(8px);
+    background: rgba(255, 189, 89, 0.05);
+    border-color: rgba(255, 189, 89, 0.3);
+    box-shadow: 0 5px 20px rgba(255, 189, 89, 0.15);
+  }
+  
+  .method-icon {
+    display: grid;
+    place-items: center;
+    width: 50px;
+    color: var(--color-primary-dark);
+    filter: drop-shadow(0 0 10px rgba(255, 189, 89, 0.3));
+  }
+  
+  .method-title {
+    font-size: 0.875rem;
+    color: var(--color-text-light);
+    font-weight: 600;
+  }
+  
+  .method-value {
+    font-size: 1rem;
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+  
+  .office-hours,
+  .social-section {
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 189, 89, 0.15);
+  }
+  
+  .office-hours h3,
+  .social-section h3 {
+    font-size: 1.25rem;
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .hours-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .hours-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--color-bg-alt);
+  }
+  
+  .hours-item:last-child {
+    border-bottom: none;
+  }
+  
+  .hours-item span:first-child {
+    font-weight: 600;
+    color: var(--color-text);
+  }
+  
+  .hours-item span:last-child {
+    color: var(--color-text-light);
+  }
+  
+  .social-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+  
+  .social-btn {
+    padding: 0.75rem;
+    text-align: center;
+    background: linear-gradient(135deg, rgba(255, 189, 89, 0.1), rgba(255, 189, 89, 0.2));
+    color: var(--color-primary-dark);
+    border-radius: var(--border-radius-md);
+    font-weight: 600;
+    text-decoration: none;
+    transition: all var(--transition-base);
+    border: 1px solid rgba(255, 189, 89, 0.3);
+  }
+  
+  .social-btn:hover {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 20px rgba(255, 189, 89, 0.3);
+  }
+  
+  .faq-section {
+    background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+  }
+  
+  .section-title {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-lg);
+  }
+  
+  .faq-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-md);
+  }
+  
+  .faq-item {
+    padding: var(--spacing-md);
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 189, 89, 0.15);
+    transition: all 0.3s ease;
+  }
+
+  .faq-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(255, 189, 89, 0.2);
+    border-color: rgba(255, 189, 89, 0.3);
+  }
+  
+  .faq-item h3 {
+    font-size: 1.25rem;
+    margin-bottom: var(--spacing-sm);
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .faq-item p {
+    color: var(--color-text-light);
+    line-height: 1.6;
+  }
+  
+  @media (max-width: 1024px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .contact-info {
+      order: 2;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .page-title {
+      font-size: 2rem;
+    }
+    
+    .contact-form {
+      grid-template-columns: 1fr;
+    }
+    
+    .section-title {
+      font-size: 2rem;
+    }
+  }
+</style>
+
+<script>
+  const form = document.getElementById('contactForm') as HTMLFormElement;
+  
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    // Get form data
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData);
+    
+    // Show success message (in a real app, you would send this to a server)
+    alert('¡Gracias por contactarnos! Nos pondremos en contacto contigo pronto.');
+    
+    // Reset form
+    form.reset();
+    
+    console.log('Form data:', data);
+  });
+</script>

@@ -1,0 +1,104 @@
+---
+import { Circle, Diamond, RotateCcw, Square } from '@lucide/astro';
+---
+<section id="laboratorio" class="lab-section" aria-labelledby="lab-title">
+  <div class="wrap">
+    <div class="section-heading"><div><p class="eyebrow"><span class="eyebrow-num">04</span> Laboratorio</p><h2 class="section-title" id="lab-title">Un espacio<br /><em>para experimentar.</em></h2></div><p>Una pequeña muestra de interacción. <br />Cambia los controles y hazla tuya.</p></div>
+    <div class="lab-workbench" data-lab data-palette="lavanda" data-shape="orb">
+      <div class="lab-stage"><div class="stage-grid"></div><span class="stage-label">PLAYGROUND / 001</span><div class="lab-object-wrap"><div class="lab-object" aria-hidden="true"></div><div class="lab-shadow"></div></div><span class="stage-caption" data-lab-caption>Lavanda · Esfera</span><div class="stage-coordinate" aria-hidden="true">X / Y / Z<br />CREATIVE EXPLORATION</div></div>
+      <div class="lab-controls" hidden>
+        <div class="control-heading"><span class="control-dot"></span><span>Tu pequeño estudio creativo</span></div>
+        <fieldset><legend>01 — Elige una paleta</legend><div class="palette-options">{[{ id: 'lavanda', label: 'Lavanda', color: '#d7c3ef' }, { id: 'durazno', label: 'Durazno', color: '#f3c9af' }, { id: 'menta', label: 'Menta', color: '#aed6c3' }, { id: 'cielo', label: 'Cielo', color: '#b6d2f1' }].map(palette => <button type="button" data-palette-option={palette.id} aria-label={palette.label} aria-pressed={palette.id === 'lavanda'} style={`--swatch: ${palette.color}`}><span></span><small>{palette.label}</small></button>)}</div></fieldset>
+        <fieldset><legend>02 — Cambia la forma</legend><div class="shape-options"><button type="button" data-shape-option="orb" aria-pressed="true"><Circle size={14} /> Esfera</button><button type="button" data-shape-option="tile" aria-pressed="false"><Square size={14} /> Bloque</button><button type="button" data-shape-option="pebble" aria-pressed="false"><Diamond size={14} /> Orgánica</button></div></fieldset>
+        <div class="rotation-control"><label for="lab-rotation">03 — Encuentra otro ángulo <output for="lab-rotation" data-rotation-output>−15°</output></label><input id="lab-rotation" type="range" min="-45" max="45" step="1" value="-15" /><div class="range-labels"><span>−45°</span><span>+45°</span></div></div>
+        <div class="lab-control-footer"><span>Explora sin límites.</span><button type="button" data-lab-reset>Restablecer <RotateCcw size={14} /></button></div>
+        <p class="sr-only" aria-live="polite" data-lab-announcement></p>
+      </div>
+      <noscript><p class="lab-noscript">Activa JavaScript para experimentar con las formas y los colores.</p></noscript>
+    </div>
+  </div>
+</section>
+<script>
+  const lab = document.querySelector<HTMLElement>('[data-lab]');
+  if (lab) {
+    const controls = lab.querySelector<HTMLElement>('.lab-controls');
+    if (controls) controls.hidden = false;
+    const palettes = lab.querySelectorAll<HTMLButtonElement>('[data-palette-option]');
+    const shapes = lab.querySelectorAll<HTMLButtonElement>('[data-shape-option]');
+    const rotation = lab.querySelector<HTMLInputElement>('#lab-rotation');
+    const caption = lab.querySelector('[data-lab-caption]');
+    const announcement = lab.querySelector('[data-lab-announcement]');
+    const output = lab.querySelector<HTMLOutputElement>('[data-rotation-output]');
+    const paletteLabels: Record<string, string> = { lavanda: 'Lavanda', durazno: 'Durazno', menta: 'Menta', cielo: 'Cielo' };
+    const shapeLabels: Record<string, string> = { orb: 'Esfera', tile: 'Bloque', pebble: 'Orgánica' };
+    const update = () => {
+      const text = `${paletteLabels[lab.dataset.palette ?? 'lavanda']} · ${shapeLabels[lab.dataset.shape ?? 'orb']}`;
+      if (caption) caption.textContent = text;
+      if (announcement) announcement.textContent = text;
+    };
+    palettes.forEach(button => button.addEventListener('click', () => {
+      lab.dataset.palette = button.dataset.paletteOption;
+      palettes.forEach(option => option.setAttribute('aria-pressed', String(option === button)));
+      update();
+    }));
+    shapes.forEach(button => button.addEventListener('click', () => {
+      lab.dataset.shape = button.dataset.shapeOption;
+      shapes.forEach(option => option.setAttribute('aria-pressed', String(option === button)));
+      update();
+    }));
+    rotation?.addEventListener('input', () => {
+      lab.style.setProperty('--lab-angle', `${rotation.value}deg`);
+      if (output) output.value = `${rotation.value}°`;
+    });
+    lab.querySelector('[data-lab-reset]')?.addEventListener('click', () => {
+      lab.dataset.palette = 'lavanda'; lab.dataset.shape = 'orb';
+      lab.style.removeProperty('--lab-angle');
+      palettes.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.paletteOption === 'lavanda')));
+      shapes.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.shapeOption === 'orb')));
+      if (rotation) rotation.value = '-15';
+      if (output) output.value = '−15°';
+      update();
+    });
+  }
+</script>
+<style>
+  .lab-section { padding-block: 96px; background: color-mix(in srgb, var(--surface-2) 45%, transparent); border-block: 1px solid var(--line); }
+  .lab-workbench { --lab-light: #f4eaff; --lab-mid: #c6a6e1; --lab-dark: #82639f; --lab-bg: color-mix(in srgb, var(--lab-mid) 26%, var(--surface)); display: grid; grid-template-columns: 1.2fr 1fr; border: 1px solid var(--line-strong); border-radius: 22px; overflow: hidden; margin-top: 32px; box-shadow: 0 20px 50px var(--shadow); background: var(--surface); }
+  .lab-workbench[data-palette='durazno'] { --lab-light: #fff0dc; --lab-mid: #eabc99; --lab-dark: #b2755a; }
+  .lab-workbench[data-palette='menta'] { --lab-light: #edfff3; --lab-mid: #9fcab2; --lab-dark: #5e8a76; }
+  .lab-workbench[data-palette='cielo'] { --lab-light: #eef8ff; --lab-mid: #a7c8e8; --lab-dark: #688db2; }
+  .lab-stage { min-height: 430px; position: relative; isolation: isolate; display: grid; place-items: center; background: var(--lab-bg); transition: background .5s; overflow: hidden; }
+  .stage-grid { position: absolute; inset: 0; background-image: linear-gradient(color-mix(in srgb, var(--ink) 8%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--ink) 8%, transparent) 1px, transparent 1px); background-size: 38px 38px; mask-image: radial-gradient(ellipse, black, transparent 75%); z-index: -1; }
+  .stage-label { position: absolute; top: 24px; left: 26px; font: 11px var(--font-mono); letter-spacing: .14em; color: var(--muted); }
+  .lab-object-wrap { width: 220px; height: 240px; position: relative; }
+  .lab-object { width: 210px; height: 210px; border-radius: 50%; background: radial-gradient(circle at 28% 22%, var(--lab-light), var(--lab-mid) 50%, var(--lab-dark)); box-shadow: inset -12px -18px 30px #40304620, inset 4px 4px 12px #fff8; transform: perspective(600px) rotateY(18deg) rotateZ(var(--lab-angle, -15deg)); transition: border-radius .6s var(--ease), transform .35s var(--ease), background .4s; position: relative; z-index: 1; }
+  [data-shape='tile'] .lab-object { border-radius: 28px; }
+  [data-shape='pebble'] .lab-object { border-radius: 38% 62% 66% 34% / 37% 34% 66% 63%; }
+  .lab-shadow { position: absolute; width: 160px; height: 20px; background: #00000030; filter: blur(10px); border-radius: 50%; bottom: -10px; left: 25px; }
+  .stage-caption { position: absolute; bottom: 24px; left: 26px; font-size: 14px; font-weight: 500; color: var(--ink); }
+  .stage-coordinate { position: absolute; right: 20px; bottom: 24px; font: 10px/1.8 var(--font-mono); color: var(--muted); text-align: right; }
+  .lab-controls { padding: 32px; }
+  .control-heading { display: flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 600; margin-bottom: 28px; }
+  .control-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 0 4px var(--accent-soft); }
+  fieldset { border: 0; padding: 0; margin: 0 0 24px; min-width: 0; }
+  legend, .rotation-control label { font-size: 13px; color: var(--muted); margin-bottom: 12px; }
+  .palette-options { display: flex; gap: 16px; }
+  .palette-options button { background: none; border: 0; padding: 5px; cursor: pointer; color: var(--muted); }
+  .palette-options button > span { display: block; width: 34px; height: 34px; border-radius: 50%; background: var(--swatch); margin: 0 auto 6px; border: 3px solid var(--surface); }
+  .palette-options button[aria-pressed='true'] > span { outline: 2px solid var(--accent); }
+  .palette-options button[aria-pressed='true'] { color: var(--ink); }
+  .palette-options small { font-size: 12px; }
+  .shape-options { display: flex; gap: 8px; }
+  .shape-options button { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; border: 1px solid var(--line); border-radius: 10px; background: transparent; color: var(--muted); padding: 7px 12px; font-size: 13px; font-weight: 500; cursor: pointer; transition: background-color .2s, border-color .2s, color .2s; }
+  .shape-options button:hover { border-color: var(--line-strong); color: var(--ink); }
+  .shape-options button[aria-pressed='true'] { background: var(--accent-soft); border-color: var(--line-strong); color: var(--on-accent-soft); }
+  .rotation-control label { display: flex; justify-content: space-between; }
+  .rotation-control output { font-family: var(--font-mono); color: var(--ink); }
+  .rotation-control input { width: 100%; accent-color: var(--accent); margin: 0; cursor: pointer; min-height: 26px; }
+  .range-labels { display: flex; justify-content: space-between; font: 11px var(--font-mono); color: var(--muted); }
+  .lab-control-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--line); margin-top: 20px; padding-top: 14px; gap: 12px; font-size: 13px; color: var(--muted); }
+  .lab-control-footer button { display: inline-flex; align-items: center; gap: 8px; background: none; border: 0; color: var(--accent); padding: 10px 0; cursor: pointer; font-size: 13px; font-weight: 550; }
+  .lab-noscript { padding: 30px; font-size: 14px; }
+  @media(max-width: 860px) { .lab-controls { padding: 24px; } .palette-options { gap: 8px; } .shape-options { flex-wrap: wrap; } }
+  @media(max-width: 580px) { .lab-section { padding-block: 56px; } .lab-workbench { grid-template-columns: 1fr; } .lab-stage { min-height: 340px; } .lab-object-wrap { scale: .85; } .lab-controls { padding: 25px; } .palette-options { justify-content: space-between; } }
+</style>

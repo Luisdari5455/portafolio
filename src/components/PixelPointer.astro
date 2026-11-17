@@ -1,0 +1,28 @@
+﻿<div class="pixel-pointer" data-pixel-pointer aria-hidden="true" hidden></div>
+<script>
+  const pointer = document.querySelector<HTMLElement>('[data-pixel-pointer]');
+  const enabled = matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)');
+  if (pointer) {
+    let frame = 0;
+    const hide = () => { cancelAnimationFrame(frame); pointer.hidden = true; };
+    window.addEventListener('pointermove', event => {
+      if (!enabled.matches || event.pointerType !== 'mouse' || document.querySelector('dialog[open]')) { hide(); return; }
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        pointer.hidden = false;
+        pointer.style.transform = `translate3d(${event.clientX + 13}px, ${event.clientY + 15}px, 0)`;
+        pointer.classList.toggle('is-action', Boolean((event.target as Element)?.closest('a, button, summary, input, label')));
+      });
+    }, { passive: true });
+    document.documentElement.addEventListener('pointerleave', hide);
+    window.addEventListener('blur', hide);
+    document.addEventListener('visibilitychange', hide);
+    document.addEventListener('keydown', event => { if (event.key === 'Tab') hide(); });
+    enabled.addEventListener('change', hide);
+  }
+</script>
+<style>
+  .pixel-pointer { position: fixed; top: 0; left: 0; width: 8px; height: 8px; pointer-events: none; border: 1px solid var(--accent); box-shadow: 3px 3px 0 var(--line); z-index: 80; }
+  .pixel-pointer.is-action { background: var(--accent); }
+  @media(hover:none), (pointer:coarse), (prefers-reduced-motion:reduce) { .pixel-pointer { display: none !important; } }
+</style>

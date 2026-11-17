@@ -1,0 +1,509 @@
+﻿---
+import MainLayout from '../../layouts/MainLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Particles from '../../components/Particles.astro';
+import { Code, Smartphone, Cloud, Brain, Shield, BarChart3, ArrowRight } from '@lucide/astro';
+import { getTranslations } from '../../i18n/utils';
+
+const t = getTranslations('en');
+---
+
+<MainLayout title="Home">
+  <Header />
+  
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <Particles />
+      <div class="container hero-content">
+        <div class="hero-text slide-in-left">
+          <h1 class="hero-title">
+            {t.home.hero.title}
+            <span class="text-gradient glow">{t.home.hero.subtitle}</span>
+          </h1>
+          <p class="hero-description fade-in">
+            {t.home.hero.description}
+          </p>
+          <div class="hero-buttons">
+            <a href="/en/contacto" class="btn btn-primary hover-lift">{t.home.hero.cta}</a>
+            <a href="/en/portafolio" class="btn btn-outline hover-scale">{t.home.hero.ctaSecondary}</a>
+          </div>
+        </div>
+        <div class="hero-image slide-in-right">
+          <div class="hero-visual">
+            <div class="floating-card card-1 glow"></div>
+            <div class="floating-card card-2 glow"></div>
+            <div class="floating-card card-3 glow"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Preview -->
+    <section class="section services-preview">
+      <div class="container">
+        <h2 class="section-title text-center scale-in">{t.home.services.title}</h2>
+        <p class="section-description text-center fade-in">
+          {t.home.services.description}
+        </p>
+        
+        <div class="grid grid-3">
+          <div class="card service-card hover-lift">
+            <div class="service-icon-wrapper pulse">
+              <Code class="service-icon" size={48} stroke-width={1.5} />
+            </div>
+            <h3>{t.home.services.items[0].title}</h3>
+            <p>{t.home.services.items[0].description}</p>
+            <a href="/en/servicios#web" class="service-link">{t.home.services.learnMore} <ArrowRight size={16} /></a>
+          </div>
+          
+          <div class="card service-card hover-lift">
+            <div class="service-icon-wrapper pulse">
+              <Smartphone class="service-icon" size={48} stroke-width={1.5} />
+            </div>
+            <h3>{t.home.services.items[1].title}</h3>
+            <p>{t.home.services.items[1].description}</p>
+            <a href="/en/servicios#mobile" class="service-link">{t.home.services.learnMore} <ArrowRight size={16} /></a>
+          </div>
+          
+          <div class="card service-card hover-lift">
+            <div class="service-icon-wrapper pulse">
+              <Cloud class="service-icon" size={48} stroke-width={1.5} />
+            </div>
+            <h3>{t.home.services.items[2].title}</h3>
+            <p>{t.home.services.items[2].description}</p>
+            <a href="/en/servicios#cloud" class="service-link">{t.home.services.learnMore} <ArrowRight size={16} /></a>
+          </div>
+          
+          <div class="card service-card hover-lift">
+            <div class="service-icon-wrapper pulse">
+              <Brain class="service-icon" size={48} stroke-width={1.5} />
+            </div>
+            <h3>{t.home.services.items[3].title}</h3>
+            <p>{t.home.services.items[3].description}</p>
+            <a href="/en/servicios#ai" class="service-link">{t.home.services.learnMore} <ArrowRight size={16} /></a>
+          </div>
+          
+          <div class="card service-card hover-lift">
+            <div class="service-icon-wrapper pulse">
+              <Shield class="service-icon" size={48} stroke-width={1.5} />
+            </div>
+            <h3>{t.home.services.items[4].title}</h3>
+            <p>{t.home.services.items[4].description}</p>
+            <a href="/en/servicios#security" class="service-link">{t.home.services.learnMore} <ArrowRight size={16} /></a>
+          </div>
+          
+          <div class="card service-card hover-lift">
+            <div class="service-icon-wrapper pulse">
+              <BarChart3 class="service-icon" size={48} stroke-width={1.5} />
+            </div>
+            <h3>{t.home.services.items[5].title}</h3>
+            <p>{t.home.services.items[5].description}</p>
+            <a href="/en/servicios#consulting" class="service-link">{t.home.services.learnMore} <ArrowRight size={16} /></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="section stats-section bg-dark">
+      <div class="container">
+        <div class="grid grid-4">
+          <div class="stat-card hover-lift">
+            <div class="stat-number">{t.home.stats.projects}</div>
+            <div class="stat-label">{t.home.stats.projectsLabel}</div>
+          </div>
+          
+          <div class="stat-card hover-lift">
+            <div class="stat-number">{t.home.stats.clients}</div>
+            <div class="stat-label">{t.home.stats.clientsLabel}</div>
+          </div>
+          
+          <div class="stat-card hover-lift">
+            <div class="stat-number">{t.home.stats.countries}</div>
+            <div class="stat-label">{t.home.stats.countriesLabel}</div>
+          </div>
+          
+          <div class="stat-card hover-lift">
+            <div class="stat-number">{t.home.stats.experience}</div>
+            <div class="stat-label">{t.home.stats.experienceLabel}</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section cta-section">
+      <div class="container">
+        <div class="cta-content scale-in">
+          <h2 class="animated-gradient-text">{t.home.cta.title}</h2>
+          <p>{t.home.cta.description}</p>
+          <a href="/en/contacto" class="btn btn-primary btn-lg hover-lift pulse-slow">{t.home.cta.button}</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <Footer />
+</MainLayout>
+
+<style>
+  main {
+    margin-top: 70px;
+  }
+
+  /* Hero Section */
+  .hero {
+    min-height: calc(100vh - 70px);
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255, 189, 89, 0.08) 0%, rgba(255, 107, 53, 0.08) 100%);
+    clip-path: polygon(20% 0, 100% 0, 100% 100%, 0 100%);
+  }
+  
+  .hero-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-lg);
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .hero-title {
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .hero-description {
+    font-size: 1.25rem;
+    color: var(--color-text-light);
+    margin-bottom: var(--spacing-md);
+    line-height: 1.8;
+  }
+  
+  .hero-buttons {
+    display: flex;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+  }
+  
+  .hero-visual {
+    position: relative;
+    width: 100%;
+    height: 500px;
+  }
+  
+  .floating-card {
+    position: absolute;
+    background: white;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-xl);
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .card-1 {
+    width: 200px;
+    height: 200px;
+    top: 10%;
+    left: 10%;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+    animation-delay: 0s;
+  }
+  
+  .card-2 {
+    width: 150px;
+    height: 150px;
+    top: 50%;
+    right: 10%;
+    background: linear-gradient(135deg, var(--color-secondary), var(--color-secondary-light));
+    animation-delay: 2s;
+  }
+  
+  .card-3 {
+    width: 100px;
+    height: 100px;
+    bottom: 15%;
+    left: 30%;
+    background: linear-gradient(135deg, var(--color-primary-dark), var(--color-secondary));
+    animation-delay: 4s;
+  }
+  
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-20px) rotate(5deg);
+    }
+  }
+  
+  /* Services Preview */
+  .services-preview {
+    background: white;
+  }
+  
+  .section-title {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .section-description {
+    font-size: 1.25rem;
+    color: var(--color-text-light);
+    margin-bottom: var(--spacing-lg);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .service-card {
+    text-align: center;
+    padding: var(--spacing-md);
+    transition: all 0.3s ease;
+  }
+
+  .service-icon-wrapper {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto var(--spacing-sm);
+    background: linear-gradient(135deg, rgba(255, 189, 89, 0.1), rgba(255, 107, 53, 0.1));
+    border-radius: var(--border-radius-lg);
+    border: 2px solid rgba(255, 189, 89, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .service-card:hover .service-icon-wrapper {
+    background: linear-gradient(135deg, rgba(255, 189, 89, 0.2), rgba(255, 107, 53, 0.2));
+    border-color: var(--color-primary);
+    transform: scale(1.1);
+  }
+  
+  .service-icon {
+    color: var(--color-primary);
+  }
+  
+  .service-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-text);
+  }
+  
+  .service-card p {
+    color: var(--color-text-light);
+    margin-bottom: var(--spacing-sm);
+    line-height: 1.6;
+  }
+  
+  .service-link {
+    color: var(--color-primary);
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    transition: transform var(--transition-fast);
+  }
+  
+  .service-link:hover {
+    transform: translateX(5px);
+  }
+  
+  /* Stats Section */
+  .stats-section {
+    background: linear-gradient(135deg, var(--color-bg-dark) 0%, #1e293b 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .stats-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(255, 189, 89, 0.1) 0%, transparent 70%);
+    animation: float 8s ease-in-out infinite;
+  }
+  
+  .stats-section::after {
+    content: '';
+    position: absolute;
+    bottom: -50%;
+    left: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(255, 107, 53, 0.1) 0%, transparent 70%);
+    animation: float 10s ease-in-out infinite reverse;
+  }
+  
+  .stat-card {
+    text-align: center;
+    padding: var(--spacing-md);
+    position: relative;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: var(--border-radius-lg);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 189, 89, 0.2);
+    transition: all var(--transition-base);
+  }
+  
+  .stat-card:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--color-primary);
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 20px 40px rgba(255, 189, 89, 0.3);
+  }
+  
+  .stat-number {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-xs);
+    text-shadow: 0 0 20px rgba(255, 189, 89, 0.5), 0 0 40px rgba(255, 189, 89, 0.3);
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .stat-label {
+    font-size: 1.125rem;
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  /* CTA Section */
+  .cta-section {
+    background: var(--color-bg-alt);
+  }
+  
+  .cta-content {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: var(--spacing-lg);
+    background: linear-gradient(135deg, rgba(255, 189, 89, 0.1), rgba(255, 107, 53, 0.1));
+    border-radius: var(--border-radius-xl);
+    border: 2px solid rgba(255, 189, 89, 0.2);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .cta-content::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 189, 89, 0.1) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+  }
+  
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .cta-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-sm);
+    position: relative;
+    z-index: 1;
+  }
+  
+  .animated-gradient-text {
+    background: linear-gradient(
+      90deg,
+      var(--color-bg-dark),
+      var(--color-primary),
+      var(--color-secondary),
+      var(--color-bg-dark)
+    );
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientFlow 4s ease infinite;
+  }
+  
+  @keyframes gradientFlow {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+  
+  .cta-content p {
+    font-size: 1.25rem;
+    color: var(--color-text-light);
+    margin-bottom: var(--spacing-md);
+    position: relative;
+    z-index: 1;
+  }
+  
+  .btn-lg {
+    padding: 1.125rem 2.5rem;
+    font-size: 1.125rem;
+  }
+  
+  /* Responsive */
+  @media (max-width: 968px) {
+    .hero-content {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+    
+    .hero-visual {
+      display: none;
+    }
+    
+    .hero-buttons {
+      justify-content: center;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .hero-title {
+      font-size: 2rem;
+    }
+    
+    .hero-description {
+      font-size: 1.125rem;
+    }
+    
+    .section-title {
+      font-size: 2rem;
+    }
+    
+    .stat-number {
+      font-size: 2.5rem;
+    }
+  }
+</style>
+

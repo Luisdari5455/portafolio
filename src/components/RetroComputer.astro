@@ -1,0 +1,68 @@
+﻿---
+const enemies = Array.from({ length: 15 }, (_, i) => ({ x: 146 + (i % 5) * 34, y: 110 + Math.floor(i / 5) * 25 }));
+---
+<div class="retro-computer" data-retro-computer>
+  <div class="retro-caption"><span>LC / ARCADE TERMINAL</span><span>01 — PLAY MODE</span></div>
+  <svg viewBox="0 0 480 400" role="img" aria-label="Computadora retro con una animación de naves espaciales">
+    <defs><clipPath id="arcade-screen-clip"><rect x="113" y="69" width="254" height="201" rx="16" /></clipPath><pattern id="arcade-scanlines" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 1h4" stroke="#000" stroke-opacity=".15" /></pattern></defs>
+    <ellipse cx="246" cy="373" rx="211" ry="13" fill="var(--line)" opacity=".5"/>
+    <path d="M82 41 365 31 399 54 401 290 373 314 80 308 67 284 67 61Z" fill="var(--surface)" stroke="var(--ink)" stroke-width="2"/>
+    <path d="m365 31 8 283 28-24-2-236Z" fill="var(--line)" stroke="var(--ink)" stroke-width="2"/>
+    <rect x="82" y="48" width="291" height="246" rx="18" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
+    <rect x="100" y="58" width="254" height="220" rx="24" fill="var(--surface)" stroke="var(--line)" stroke-width="12"/>
+    <rect x="108" y="64" width="254" height="207" rx="18" fill="#151e24"/>
+    <g clip-path="url(#arcade-screen-clip)">
+      <g class="arcade-stars" fill="#c2d5cf" opacity=".55">{Array.from({length:24},(_,i)=><rect x={121+(i*71)%232} y={73+(i*43)%200} width="2" height="2"/>)}</g>
+      <text x="125" y="88" fill="#e6d6ae" font-size="8" font-family="monospace">LC-01                   HI 008400</text>
+      <g class="arcade-fleet" fill="#efa166" shape-rendering="crispEdges">{enemies.map(({x,y})=><path transform={`translate(${x} ${y})`} d="M3 0h3v3h6V0h3v3h3v3h3v9h-3v-3h-3v3h-3v-3H6v3H3v-3H0V6h3Zm3 6v3h3V6Zm6 0v3h3V6Z" fill-rule="evenodd"/>)}</g>
+      <g class="arcade-player" fill="#bde5cf" shape-rendering="crispEdges"><path d="M231 230h6v6h6v6h6v9h-9v-6h-12v6h-9v-9h6v-6h6Z"/><path class="arcade-shot" d="M232 224h4v-13h-4Z" fill="#f8da92"/></g>
+      <rect x="108" y="64" width="254" height="207" fill="url(#arcade-scanlines)"/>
+      <path d="M125 76h90L125 175Z" fill="white" opacity=".035"/>
+    </g>
+    <path d="M97 285h37m8 0h17" stroke="var(--muted)" stroke-width="3"/><rect x="332" y="281" width="9" height="5" fill="var(--accent)"/>
+    <path d="M195 309v18h96v-17M173 327h139l14 14H158Z" fill="var(--surface)" stroke="var(--ink)" stroke-width="2"/>
+    <path d="m83 335 257 0 35 29-5 12H54l-5-12Z" fill="var(--surface)" stroke="var(--ink)" stroke-width="2"/>
+    <g stroke="var(--muted)" fill="none">{[0,1,2].map(row=><path d={`M${84-row*8} ${343+row*8}h${255+row*14}`}/>)}{Array.from({length:15},(_,i)=><path d={`M${91+i*16} 339l-5 23`}/>)}</g>
+    <path d="M147 362h115v6H147Z" fill="var(--paper)" stroke="var(--muted)"/>
+    <path d="M404 344c22-5 33 10 31 28h-39c-4-14-1-24 8-28Z" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/><path d="M415 345v12m-17 0h35" stroke="var(--muted)"/>
+  </svg>
+  <div class="retro-controls"><span>PIXEL SPACE / AUTO DEMO</span><button type="button" data-arcade-toggle aria-pressed="false" hidden><span data-arcade-pause>Pausar animación</span><span data-arcade-play hidden>Reanudar animación</span></button></div>
+</div>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-retro-computer]').forEach(computer => {
+    const button = computer.querySelector<HTMLButtonElement>('[data-arcade-toggle]')!;
+    const motion = matchMedia('(prefers-reduced-motion: reduce)');
+    let paused = motion.matches;
+    let visible = false;
+    const sync = () => {
+      computer.classList.toggle('is-playing', visible && !paused && !document.hidden);
+      button.setAttribute('aria-pressed', String(paused));
+      computer.querySelector<HTMLElement>('[data-arcade-pause]')!.hidden = paused;
+      computer.querySelector<HTMLElement>('[data-arcade-play]')!.hidden = !paused;
+    };
+    button.hidden = false;
+    button.addEventListener('click', () => { paused = !paused; sync(); });
+    new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; sync(); }).observe(computer);
+    motion.addEventListener('change', () => { paused = motion.matches; sync(); });
+    document.addEventListener('visibilitychange', sync);
+    sync();
+  });
+</script>
+<style>
+  .retro-computer { width: 100%; }
+  .retro-caption, .retro-controls { display:flex; justify-content:space-between; align-items:center; gap:12px; font:10px/1.5 monospace; color:var(--muted); }
+  .retro-caption { border-bottom:1px solid var(--line); padding-bottom:14px; letter-spacing:1px; }
+  svg { width:100%; display:block; overflow:visible; }
+  .retro-controls button { color:var(--accent); font:inherit; background:var(--paper); border:1px solid var(--line); padding:10px 12px; min-height:44px; cursor:pointer; }
+  .arcade-fleet { animation:fleet 3s ease-in-out infinite alternate; }
+  .arcade-player { animation:pilot 4s ease-in-out infinite alternate; }
+  .arcade-shot { animation:shot 1s linear infinite; }
+  .arcade-stars { animation:stars 6s linear infinite; }
+  .arcade-fleet,.arcade-player,.arcade-shot,.arcade-stars { animation-play-state:paused; }
+  .is-playing .arcade-fleet,.is-playing .arcade-player,.is-playing .arcade-shot,.is-playing .arcade-stars { animation-play-state:running; }
+  @keyframes fleet { from { transform:translate(-12px,0); } to { transform:translate(15px,8px); } }
+  @keyframes pilot { from { transform:translateX(-65px); } to { transform:translateX(65px); } }
+  @keyframes shot { from { transform:translateY(0); opacity:1; } to { transform:translateY(-135px); opacity:0; } }
+  @keyframes stars { to { transform:translateY(25px); } }
+  @media(max-width:480px) { .retro-caption,.retro-controls { font-size:8px; }.retro-caption { letter-spacing:0; } }
+</style>

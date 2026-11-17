@@ -1,0 +1,13 @@
+﻿---
+interface Props { variant?: 'monogram' | 'coffee' | 'spark'; }
+const { variant = 'monogram' } = Astro.props;
+const patterns = {
+  monogram: ['10000001110', '10000010001', '10000010000', '10000010000', '10000010000', '10000010001', '11111001110'],
+  coffee: ['00100100000', '00010010000', '00000000000', '01111111000', '01000001110', '01000001010', '01000001110', '00111110000', '11111111100'],
+  spark: ['00000100000', '00001110000', '00001110000', '01111111110', '11111111111', '01111111110', '00001110000', '00001110000', '00000100000'],
+};
+const pattern = patterns[variant];
+---
+<svg viewBox="0 0 44 36" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true" focusable="false">
+  {pattern.flatMap((row, y) => [...row].map((cell, x) => cell === '1' && <rect x={x * 4} y={y * 4 + (variant === 'monogram' ? 4 : 0)} width="3" height="3" />))}
+</svg>

@@ -1,0 +1,14 @@
+﻿---
+interface Props { index: number; }
+const { index } = Astro.props;
+---
+<svg class="project-pixel-backdrop" viewBox="0 0 360 260" fill="none" shape-rendering="crispEdges" aria-hidden="true" focusable="false">
+  <g stroke="var(--line)" stroke-width="1"><path d="M15 40h50v30h40m240 133h-45v-28h-40M35 225v-30h35M330 45h-35v25"/><path d="M100 16h30m7 0h12m-8 224h40m8 0h8"/>{[20, 320].map(x => <rect x={x} y="115" width="15" height="15"/>)}</g>
+  <g fill="var(--accent)" opacity=".6"><path d="M20 38h6v6h-6Zm305 4h6v6h-6ZM31 220h6v6h-6Zm306-19h6v6h-6Z"/><path d="M301 108h6v6h-6m-6 0h18v6h-18m6 0h6v6h-6Z"/></g>
+  <g transform="translate(35 68)" fill="var(--line)">{Array.from({length:6},(_,i)=><rect x={i*8} y={(i+index)%2*8} width="5" height="5"/>)}</g>
+  <g transform="translate(260 220)" fill="var(--muted)" opacity=".5"><path d="M0 0h4v4H0Zm4 4h4v4H4Zm4 4h4v4H8ZM0 16h4v4H0Zm4-4h4v4H4Z"/><path d="M20 16h18v4H20Z"/></g>
+</svg>
+<style>
+  .project-pixel-backdrop { position: absolute; inset: -18px -10px; width: calc(100% + 20px); height: calc(100% + 36px); z-index: -1; pointer-events: none; transform: translateY(calc(var(--py, 0px) * -.35)); }
+  @media(max-width:860px), (prefers-reduced-motion:reduce) { .project-pixel-backdrop { transform: none; } }
+</style>

@@ -1,0 +1,46 @@
+﻿<div class="xela-backdrop" aria-hidden="true">
+  <svg viewBox="0 0 1000 330" preserveAspectRatio="xMidYMax meet" shape-rendering="crispEdges" focusable="false">
+
+    <g fill="var(--xela-stars)">{[[42,30],[145,62],[264,25],[430,39],[540,20],[632,61],[710,25],[936,35],[965,94]].map(([x,y]) => <path d={`M${x} ${y}h3v3h-3Zm-3 3h9v3h-9Zm3 3h3v3h-3Z`}/>)}</g>
+    <g class="xela-moon" fill="var(--xela-moon)"><path d="M824 24h35v7h14v14h7v28h-7v14h-14v7h-35v-7h-14V73h-7V45h7V31h14Z"/><path d="M824 39h14v7h-14Zm28 21h14v14h-14Zm-35 7h7v14h-7Z" fill="var(--xela-crater)"/></g>
+    <g class="xela-mountains">
+      <path d="M0 203h40v-20h35v-25h30v-25h25v-25h25V85h20V65h22v20h22v24h25v25h25v27h30v25h35v144H0Z" fill="var(--xela-far)"/>
+      <path d="M145 85h20V65h22v20h22v24h-20V98h-24v12h-20Z" fill="var(--xela-ridge)"/>
+      <path d="M239 233h35v-23h30v-25h25v-23h22v-25h20v-21h21v-21h22v21h22v21h20v24h25v24h30v25h35v120H239Z" fill="var(--xela-near)"/>
+      <path d="M570 222h45v-23h35v-23h30v-22h30v-24h26v-20h28v20h28v24h30v22h35v23h40v22h40v109H570Z" fill="var(--xela-far)"/>
+    </g>
+    <g class="xela-clouds" fill="var(--xela-cloud)"><path d="M46 119h20v-7h29v7h25v7H46Z"/><path d="M452 83h22v-8h35v8h30v8h-87Z"/><path d="M740 109h23v-8h38v8h25v8h-86Z"/></g>
+    <!-- Stylized Minerva temple: stepped pediment, open colonnade and broad base. -->
+    <g fill="var(--xela-stone)" stroke="var(--xela-edge)" stroke-width="1">
+      <path d="M50 212h280v9H50Z"/><path d="M64 205h252v7H64Zm15-7h222v7H79Zm15-7h192v7H94Zm15-7h162v7H109Zm16-7h130v7H125Zm17-7h96v7H142Zm17-7h62v7H159Zm18-7h26v7H177Z"/>
+      {[67,108,149,190,231,272,313].map(x => <g><rect x={x-5} y="222" width="21" height="7"/><rect x={x} y="229" width="11" height="62"/><path d={`M${x+4} 232v55`} stroke="var(--xela-shadow)"/><rect x={x-5} y="291" width="21" height="7"/></g>)}
+      <path d="M47 298h289v6H47Zm-10 6h309v6H37Zm-10 6h329v7H27Z"/>
+      <path d="M98 209h184" stroke="var(--xela-shadow)"/>
+    </g>
+    <!-- Parque Centroamérica: rotunda, fountain, greenery and lamplights. -->
+    <g fill="var(--xela-stone)" stroke="var(--xela-edge)">
+      <path d="M430 218h147v8H430Zm10-7h127v7H440Zm14-7h99v7h-99Zm18-7h63v7h-63Z"/>
+      {[440,468,496,524,552].map(x => <g><rect x={x-2} y="227" width="15" height="5"/><rect x={x} y="232" width="11" height="54"/><rect x={x-2} y="286" width="15" height="6"/></g>)}
+      <path d="M424 292h160v7H424Zm-9 7h178v7H415Z"/>
+    </g>
+    <g fill="var(--xela-water)"><path d="M600 297h74v7h-74Zm10-7h54v7h-54Zm15-18h24v5h-24Zm9-15h6v34h-6Z"/><path d="M616 279h4v7h-4m39-7h4v7h-4"/></g>
+    <g fill="var(--xela-stone)" stroke="var(--xela-edge)"><path d="M700 230h259v72H700Z"/><path d="M691 222h278v9H691Z"/>{[716,755,794,833,872,911,950].map(x => <g><rect x={x} y="237" width="10" height="57"/><rect x={x-2} y="234" width="14" height="5"/></g>)}<path d="M694 302h271v8H694Z"/></g>
+    <g fill="var(--xela-window)">{[734,773,812,851,890,929].map(x => <path d={`M${x} 250h13v44h-13Z`}/>)}</g>
+    <g fill="var(--xela-green)">{[380, 678, 980].map(x => <g><rect x={x} y="253" width="6" height="57" fill="var(--xela-edge)"/><path d={`M${x-22} 242h10v-14h29v14h11v25h-50Z`}/><path d={`M${x-15} 239h21v7h-21Z`} fill="var(--xela-leaf)"/></g>)}</g>
+    <g stroke="var(--xela-edge)" stroke-width="3">{[362, 410, 592, 690].map(x => <path d={`M${x} 257v53m-5-53h10`}/>)}</g>
+    <g fill="var(--xela-light)">{[362, 410, 592, 690].map(x => <rect x={x-4} y="248" width="8" height="10"/>)}</g>
+    <g fill="var(--xela-edge)"><path d="M394 302h29v4h-29m3 0v7h3v-7m17 0v7h3v-7M603 310h35v4h-35Z"/></g>
+    <path d="M851 187v35" stroke="var(--xela-edge)" stroke-width="2"/><path d="M852 187h7v17h-7Zm14 0h7v17h-7Z" fill="#6caccd"/><rect x="859" y="187" width="7" height="17" fill="#eeeae1"/>
+    <path d="M0 318h1000v12H0Z" fill="var(--surface)"/><path d="M0 318h1000m-1000 7h1000" stroke="var(--xela-edge)"/>
+  </svg>
+</div>
+<style>
+  .xela-backdrop { --xela-sky: light-dark(#e5e8ed, #161d30); --xela-stars: light-dark(#68738b, #d3c9a7); --xela-moon: light-dark(#f8f0d3, #e7d5a8); --xela-crater: light-dark(#e9dfbc, #c6b88f); --xela-far: light-dark(#acb5c4, #313b56); --xela-near: light-dark(#97a3b4, #263749); --xela-ridge: light-dark(#c5ced8, #4c5670); --xela-cloud: light-dark(#d8dde6, #343d53); --xela-stone: light-dark(#e1d5bb, #a2977f); --xela-edge: light-dark(#9b8c73, #6e685d); --xela-shadow: light-dark(#c4b697, #766d5c); --xela-window: light-dark(#9e998f, #252a32); --xela-green: light-dark(#6f8e76, #3b5c4a); --xela-leaf: light-dark(#8da58c, #50735c); --xela-water: light-dark(#7a9da9, #537f92); --xela-light: light-dark(#e9b56b, #f0c684); position: absolute; bottom: 0; left: 0; right: 0; z-index: -1; pointer-events: none; }
+  .xela-backdrop > svg { display: block; width: 100%; height: auto; border-radius: 4px; }
+  .xela-caption { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; padding-block: 12px; font: 8px monospace; letter-spacing: 1px; color: var(--muted); }
+  .xela-mountains { transform: translateY(calc(var(--chapter-y, 0px) * -.1)); }
+  .xela-clouds { transform: translateX(calc(var(--chapter-y, 0px) * .1)); }
+  @media(max-width:580px) { .xela-caption { font-size: 6px; letter-spacing: .4px; } }
+  @media(prefers-reduced-motion:reduce) { .xela-mountains, .xela-clouds { transform: none; } }
+</style>
+

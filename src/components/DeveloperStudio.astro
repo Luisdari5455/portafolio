@@ -1,0 +1,48 @@
+﻿---
+import PixelHuman from './PixelHuman.astro';
+---
+<div class="developer-studio" data-developer-studio>
+  <div class="studio-caption"><span>LUIS / CREATIVE WORKSPACE</span><span aria-hidden="true">&lt;/&gt;</span></div>
+  <svg viewBox="0 0 340 165" aria-hidden="true" focusable="false">
+    <g fill="none" stroke="var(--line)"><path d="M12 142h316M22 148h40m12 0h110m40 0h70"/><rect x="23" y="28" width="45" height="35"/><path d="M33 40h25M33 47h15"/><path d="M265 29h46v36h-46Z"/></g>
+    <g class="studio-bubble" fill="var(--accent)"><rect x="280" y="39" width="4" height="4"/><rect x="294" y="39" width="4" height="4"/><path d="M282 51h14v3h-14Z"/></g>
+    <g class="studio-screen"><rect x="100" y="34" width="118" height="70" rx="2" fill="var(--paper)" stroke="var(--ink)"/><rect x="106" y="40" width="106" height="56" fill="var(--surface)"/><path d="M115 52h17m5 0h25M123 61h51M123 70h35m5 0h26M115 80h22" stroke="var(--accent)" stroke-width="2"/><rect x="154" y="105" width="10" height="10" fill="var(--ink)"/><path d="M140 115h40" stroke="var(--ink)" stroke-width="3"/></g>
+    <path d="M78 120h169v5H78Zm8 5h5v18h-5Zm147 0h5v18h-5Z" fill="var(--ink)"/>
+    <path d="M108 117h31m50 0h11" stroke="var(--muted)" stroke-width="3"/>
+    <g transform="translate(222 71) scale(2.2)"><PixelHuman wave /></g>
+    <g fill="var(--surface)" stroke="var(--ink)"><path d="M44 120h18l-3 20H47Z"/><path d="M53 120V90m0 13-12-8m12 16 12-11" stroke="var(--ok)" stroke-width="3"/></g>
+    <path d="M229 110h8v10h-8Zm8 2h4v5h-4" fill="var(--paper)" stroke="var(--accent)"/>
+  </svg>
+  <div class="studio-bottom"><p><span data-studio-default>Detrás del código, una persona.</span><span data-studio-wave hidden>¡Hola! Construyamos algo juntos.</span></p><button type="button" data-studio-greet aria-pressed="false" hidden><span>Saludar</span><span aria-hidden="true">↗</span></button></div>
+</div>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-developer-studio]').forEach(studio => {
+    const button = studio.querySelector<HTMLButtonElement>('[data-studio-greet]');
+    if (!button) return;
+    button.hidden = false;
+    button.addEventListener('click', () => {
+      const active = button.getAttribute('aria-pressed') !== 'true';
+      button.setAttribute('aria-pressed', String(active));
+      studio.classList.toggle('is-waving', active);
+      const normal = studio.querySelector<HTMLElement>('[data-studio-default]');
+      const greeting = studio.querySelector<HTMLElement>('[data-studio-wave]');
+      if (normal) normal.hidden = active;
+      if (greeting) greeting.hidden = !active;
+    });
+  });
+</script>
+<style>
+  .developer-studio { width: 100%; margin-bottom: 28px; border: 1px solid var(--line); border-radius: 5px; background: var(--paper); box-shadow: 5px 5px 0 var(--line); }
+  .studio-caption { display: flex; justify-content: space-between; gap: 12px; font: 9px monospace; letter-spacing: 1px; padding: 12px 18px; color: var(--muted); border-bottom: 1px solid var(--line); }
+  .developer-studio > svg { display: block; width: 100%; max-height: 235px; padding: 15px; }
+  .studio-screen { transition: transform .4s; transform-origin: 160px 100px; }
+  .studio-bottom { display: flex; align-items: center; justify-content: space-between; gap: 16px; border-top: 1px solid var(--line); padding: 9px 18px; }
+  .studio-bottom p { font-size: 12px; color: var(--muted); }
+  .studio-bottom button { display: inline-flex; align-items: center; gap: 10px; padding: 10px; min-height: 44px; background: none; border: 1px solid var(--line); border-radius: 3px; cursor: pointer; font-size: 12px; }
+  .studio-bottom button:hover, .studio-bottom button[aria-pressed='true'] { color: var(--accent); border-color: var(--accent); }
+  .developer-studio :global(.pixel-wave) { transform-origin: 22px 13px; transform: rotate(35deg); }
+  .developer-studio.is-waving :global(.pixel-wave) { animation: wave .8s steps(4) 3; transform: rotate(-15deg); }
+  .is-waving .studio-screen { transform: translateY(-3px); }
+  @keyframes wave { 0%,100% { transform: rotate(-15deg); } 50% { transform: rotate(-45deg); } }
+  @media(prefers-reduced-motion:reduce) { .developer-studio :global(.pixel-wave) { animation: none !important; } .studio-screen { transition: none; } }
+</style>

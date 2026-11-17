@@ -1,0 +1,87 @@
+﻿---
+const layers = [
+  { title: 'Frontend', code: '01 / INTERFACE', description: 'La interfaz recoge la acción del usuario y presenta el resultado. Aquí entran los componentes, el estado y la experiencia de navegación.', technologies: ['React.js', 'TypeScript', 'Redux', 'Next.js'], example: 'user.action → request' },
+  { title: 'Backend', code: '02 / LOGIC', description: 'La API recibe la petición, aplica las reglas del negocio y coordina las integraciones. Esta capa conecta la interfaz con los servicios y los datos.', technologies: ['Node.js', 'C# / .NET', 'REST APIs', 'Azure Functions'], example: 'request → validate → service' },
+  { title: 'Cloud y datos', code: '03 / STORAGE', description: 'Los datos se consultan o almacenan y la respuesta vuelve a la interfaz. La infraestructura permite desplegar y conectar los servicios.', technologies: ['SQL Server', 'MySQL', 'Microsoft Azure', 'Kafka'], example: 'query → response → interface' },
+];
+---
+<section id="laboratorio-3d" class="section section-wide architecture-section" aria-labelledby="architecture-title" data-architecture-lab>
+  <header class="section-head"><h2 class="section-title" id="architecture-title">¿Qué pasa cuando haces clic?</h2><p>Pulsa «Consultar proyectos» y sigue el viaje de una petición. La interfaz pide información, la API la procesa y los datos regresan a tu pantalla.</p></header>
+  <ol class="architecture-guide"><li><b>01</b><span>Haz una consulta</span></li><li><b>02</b><span>Sigue la luz entre las piezas</span></li><li><b>03</b><span>Recibe el resultado</span></li></ol><div class="architecture-workbench">
+    <div class="architecture-visual">
+      <div class="architecture-toolbar"><span>LC / SYSTEM EXPLORER</span><span>Simulación local</span></div>
+      <div class="architecture-stage" data-architecture-stage><div class="architecture-labels" data-architecture-labels hidden aria-hidden="true"><span data-model-label>01 / UI</span><span data-model-label>02 / API</span><span data-model-label>03 / DATA</span></div>
+        <div class="architecture-fallback" data-architecture-fallback aria-hidden="true"><div><span>▦</span><b>UI</b></div><span>→</span><div><span>⌘</span><b>API</b></div><span>→</span><div><span>▤</span><b>DATA</b></div></div>
+      </div>
+      <div class="scene-progress" role="status"><span data-scene-step="0" hidden>La interfaz solicita los proyectos.</span><span data-scene-step="1" hidden>La API procesa la consulta.</span><span data-scene-step="2" hidden>La base de datos devuelve la información.</span><span data-scene-step="3" hidden>La API prepara la respuesta.</span></div>
+      <div class="architecture-launch"><button type="button" class="button" data-architecture-start hidden><span>Consultar proyectos</span><span aria-hidden="true">↗</span></button><p data-architecture-loading hidden role="status">Preparando escena 3D…</p><p data-architecture-error hidden role="status">La vista 3D no está disponible en este dispositivo. Puedes explorar las capas con los botones.</p><p data-architecture-hint hidden>Toca una pieza para conocer su función. También puedes girar y separar el modelo.</p><noscript>La explicación de cada capa está disponible debajo, sin necesidad de activar 3D.</noscript></div>
+      <div class="architecture-controls" data-architecture-controls hidden>
+        <label><span>Girar escena</span><input type="range" min="-90" max="90" value="0" step="1" data-architecture-angle /></label>
+        <label class="architecture-expand"><input type="checkbox" data-architecture-expand /><span>Separar capas</span></label>
+        <button type="button" data-architecture-reset>Restablecer vista</button>
+      </div>
+    </div>
+    <div class="architecture-inspector">
+      <p class="architecture-eyebrow">DETRÁS DE UNA APLICACIÓN</p>
+      <div class="architecture-tabs" role="group" aria-label="Explorar capas" data-architecture-tabs hidden>{layers.map((layer, index) => <button type="button" data-architecture-select={index} aria-pressed={index === 0}>{layer.title}</button>)}</div>
+      {layers.map((layer, index) => <article class="architecture-panel" data-architecture-panel={index}><span class="architecture-layer-code">{layer.code}</span><h3>{layer.title}</h3><p>{layer.description}</p><ul class="tag-list">{layer.technologies.map(technology => <li>{technology}</li>)}</ul><code>{layer.example}</code></article>)}
+      <div class="architecture-flow"><button type="button" class="button button-primary" data-architecture-run hidden><span>Repetir consulta</span><span aria-hidden="true">▶</span></button><p>Una demostración visual, sin peticiones a servidores ni datos reales.</p><div role="status" class="architecture-flow-status"><span data-flow-ready>UI → API → DATOS → UI</span><span data-flow-running hidden>Consulta en curso…</span><span data-flow-done hidden>Respuesta recibida. Ya puedes explorar los proyectos.</span></div><ol class="request-steps" aria-label="Recorrido de la consulta"><li data-request-step="0">La interfaz solicita los proyectos.</li><li data-request-step="1">La API procesa la consulta.</li><li data-request-step="2">La base de datos devuelve la información.</li><li data-request-step="3">La API prepara la respuesta.</li></ol></div>
+    </div>
+  </div>
+  <div class="architecture-result" data-architecture-result hidden><div><span class="architecture-layer-code">200 / OK</span><h3>Proyectos recibidos</h3><p>Este es el resultado de la simulación. Estos enlaces sí abren proyectos reales.</p></div><a href="https://stylefy.app/" target="_blank" rel="noopener noreferrer">Stylefy <span aria-hidden="true">↗</span></a><a href="https://www.arrsuc.com/" target="_blank" rel="noopener noreferrer">ARRSUC <span aria-hidden="true">↗</span></a></div>
+</section>
+<script>
+  import { setupArchitectureLab } from '../scripts/architecture-ui';
+  document.querySelectorAll<HTMLElement>('[data-architecture-lab]').forEach(setupArchitectureLab);
+</script>
+<style>
+  .scene-progress { min-height: 40px; text-align: center; padding: 8px 16px; font: 12px/1.7 monospace; color: var(--accent); }
+  .architecture-labels { position: absolute; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
+  .architecture-labels span { position: absolute; font: 9px monospace; white-space: nowrap; color: var(--accent); background: var(--paper); padding: 5px; border: 1px solid var(--line); transform: translate(-50%, -50%); }
+  .architecture-guide { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; list-style: none; padding: 0; margin-top: 30px; }
+  .architecture-guide li { display: flex; align-items: center; gap: 12px; font-size: 13px; }
+  .architecture-guide b { color: var(--accent); font: 12px monospace; border: 1px solid var(--line); padding: 10px; }
+  .request-steps { display: grid; gap: 8px; padding: 0; list-style: none; margin-top: 16px; color: var(--muted); }
+  .request-steps li { padding: 9px 12px; border-left: 2px solid var(--line); }
+  .request-steps li[data-active] { color: var(--accent); border-color: var(--accent); background: var(--surface); }
+  .architecture-result { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; gap: 24px; border: 1px solid var(--accent); padding: 24px; background: var(--surface); margin-top: 20px; }
+  .architecture-result h3 { margin: 8px 0; font-size: 20px; }.architecture-result p { color: var(--muted); font-size: 12px; }
+  .architecture-result a { border: 1px solid var(--line); padding: 14px 18px; background: var(--paper); display: flex; justify-content: space-between; gap: 24px; }
+  @media(max-width:580px) { .architecture-guide { grid-template-columns: 1fr; gap: 10px; }.architecture-result { grid-template-columns: 1fr; gap: 12px; }.architecture-tabs button { min-height: 44px; } }
+
+  .architecture-workbench { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(280px, .8fr); margin-top: 36px; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: var(--paper); }
+  .architecture-visual { border-right: 1px solid var(--line); background: var(--surface); min-width: 0; }
+  .architecture-toolbar { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding: 16px 20px; font: 9px monospace; letter-spacing: 1px; border-bottom: 1px solid var(--line); color: var(--muted); }
+  .architecture-stage { position: relative; width: 100%; height: clamp(280px, 32vw, 470px); background-image: radial-gradient(var(--line) 1px, transparent 1px); background-size: 20px 20px; }
+  .architecture-stage :global(canvas) { display: block; width: 100%; height: 100%; touch-action: pan-y; }
+  .architecture-fallback { display: flex; align-items: center; justify-content: center; gap: clamp(12px, 2vw, 28px); height: 100%; padding: 24px; }
+  .architecture-fallback > div { display: grid; place-items: center; gap: 12px; padding: 22px; background: var(--paper); border: 1px solid var(--ink); box-shadow: 6px 6px 0 var(--line); transform: rotate(-5deg); }
+  .architecture-fallback > div:nth-of-type(2) { transform: translateY(-20px) rotate(5deg); }
+  .architecture-fallback div span { font-size: 32px; color: var(--accent); }.architecture-fallback b { font: 10px monospace; }
+  .architecture-launch { display: flex; justify-content: center; padding: 8px 20px 24px; min-height: 75px; }
+  .architecture-launch p, noscript { font-size: 12px; color: var(--muted); text-align: center; max-width: 430px; }
+  .architecture-launch button { cursor: pointer; background: var(--paper); }
+  .architecture-controls { padding: 20px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap; border-top: 1px solid var(--line); font-size: 11px; }
+  .architecture-controls > label:first-child { display: grid; gap: 6px; flex: 1; min-width: 140px; }
+  .architecture-controls input[type='range'] { accent-color: var(--accent); width: 100%; min-height: 26px; }
+  .architecture-expand { display: flex; gap: 6px; align-items: center; cursor: pointer; }.architecture-expand input { accent-color: var(--accent); width: 18px; height: 18px; }
+  .architecture-controls button { border: 0; background: none; padding: 12px 0; color: var(--accent); cursor: pointer; font: inherit; }
+  .architecture-inspector { padding: clamp(22px, 3vw, 40px); min-width: 0; }
+  .architecture-eyebrow { font: 9px monospace; letter-spacing: 1.3px; color: var(--muted); }
+  .architecture-tabs { display: flex; flex-wrap: wrap; gap: 7px; margin-block: 22px; }
+  .architecture-tabs button { font-size: 11px; border: 1px solid var(--line); border-radius: 3px; padding: 10px; min-height: 40px; background: transparent; cursor: pointer; }
+  .architecture-tabs button[aria-pressed='true'] { border-color: var(--accent); color: var(--accent); background: var(--surface); }
+  .architecture-panel { padding-block: 10px 24px; }
+  .architecture-layer-code { font: 9px monospace; color: var(--accent); }
+  .architecture-panel h3 { font-size: 27px; margin-block: 14px; letter-spacing: -.8px; font-weight: 600; }
+  .architecture-panel > p { font-size: 14px; color: var(--muted); line-height: 1.8; }
+  .architecture-panel .tag-list li { font-size: 11px; }
+  .architecture-panel code { display: block; font-size: 10px; background: var(--surface); border: 1px dashed var(--line); padding: 12px; margin-top: 20px; overflow-wrap: anywhere; }
+  .architecture-flow { border-top: 1px solid var(--line); padding-top: 24px; }
+  .architecture-flow button { cursor: pointer; font-size: 13px; }
+  .architecture-flow button:disabled { cursor: wait; opacity: .6; }
+  .architecture-flow > p { font-size: 10px; color: var(--muted); margin-top: 16px; }
+  .architecture-flow-status { font: 10px/1.7 monospace; color: var(--accent); margin-top: 14px; min-height: 34px; }
+  @media(max-width:1000px) { .architecture-workbench { grid-template-columns: 1fr; }.architecture-visual { border-right: 0; border-bottom: 1px solid var(--line); }.architecture-stage { height: 350px; } }
+  @media(max-width:580px) { .architecture-stage { height: 280px; }.architecture-fallback > div { padding: 16px; }.architecture-fallback { gap: 12px; }.architecture-controls { gap: 12px; } }
+</style>

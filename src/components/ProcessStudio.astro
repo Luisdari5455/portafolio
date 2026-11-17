@@ -1,0 +1,43 @@
+﻿---
+import { Search, PenTool, Braces, CheckCheck } from '@lucide/astro';
+import PixelHuman from './PixelHuman.astro';
+interface Props { steps: Array<{ title: string; description: string }>; }
+const { steps } = Astro.props;
+const icons = [Search, PenTool, Braces, CheckCheck];
+---
+<div class="section-body process-studio" data-process-studio>
+  <div class="process-map" aria-hidden="true"><div class="map-grid"></div><svg viewBox="0 0 480 110" focusable="false"><path d="M45 81h390" stroke="var(--line)" stroke-width="2" stroke-dasharray="4 5"/>{steps.map((_, i) => <g><rect x={38+i*122} y="78" width="36" height="8" fill="var(--surface)" stroke="var(--ink)"/><text x={50+i*122} y="103" fill="var(--muted)" font-size="8" font-family="monospace">0{i+1}</text></g>)}<g class="process-person"><PixelHuman wave /></g><path d="M448 27v48m0-48h20v16h-20" stroke="var(--accent)" fill="var(--surface)"/></svg><span class="map-label">IDEA → DESIGN → CODE → REVIEW</span></div>
+  <ol class="process-cards">{steps.map((step, index) => { const Icon = icons[index] ?? Braces; return <li class:list={['process-step', { 'is-current': index === 0 }]} data-process-step={index}><div class="process-step-top"><span class="process-step-icon" aria-hidden="true"><Icon size={24} stroke-width={1.4} /></span><span>0{index+1}</span></div><h3>{step.title}</h3><p>{step.description}</p><button type="button" data-process-select={index} aria-pressed={index === 0} aria-label={step.title} hidden><span>Explorar esta etapa</span><span aria-hidden="true">↗</span></button></li>; })}</ol>
+</div>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-process-studio]').forEach(studio => {
+    const buttons = studio.querySelectorAll<HTMLButtonElement>('[data-process-select]');
+    const cards = studio.querySelectorAll<HTMLElement>('[data-process-step]');
+    buttons.forEach(button => {
+      button.hidden = false;
+      button.addEventListener('click', () => {
+        const index = Number(button.dataset.processSelect);
+        studio.style.setProperty('--process-x', `${44 + index * 122}px`);
+        buttons.forEach(other => other.setAttribute('aria-pressed', String(other === button)));
+        cards.forEach(card => card.classList.toggle('is-current', Number(card.dataset.processStep) === index));
+      });
+    });
+  });
+</script>
+<style>
+  .process-map { position: relative; overflow: hidden; border: 1px solid var(--line); border-radius: 4px; background: var(--surface); padding: 16px 22px; margin-bottom: 24px; }
+  .map-grid { position: absolute; inset: 0; opacity: .35; background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg,var(--line) 1px,transparent 1px); background-size: 22px 22px; }
+  .process-map svg { display: block; width: 100%; max-height: 180px; position: relative; }
+  .map-label { display: block; text-align: right; color: var(--muted); font: 8px monospace; letter-spacing: 1px; margin-top: 10px; }
+  .process-person { transform: translate(var(--process-x, 44px), 46px); transition: transform .65s cubic-bezier(.22, 1, .36, 1); }
+  .process-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+  .process-step { min-width: 0; border: 1px solid var(--line); padding: 23px; border-radius: 4px; background: var(--paper); transition: border-color .2s, box-shadow .2s; }
+  .process-step.is-current { border-color: var(--accent); box-shadow: 4px 4px 0 var(--line); }
+  .process-step-top { display: flex; align-items: center; justify-content: space-between; color: var(--muted); font: 10px monospace; margin-bottom: 18px; }
+  .process-step-icon { color: var(--accent); }
+  .process-step h3 { font-size: 19px; font-weight: 600; }
+  .process-step p { margin-top: 9px; font-size: 14px; color: var(--muted); }
+  .process-step button { display: flex; align-items: center; gap: 16px; background: none; border: 0; border-top: 1px solid var(--line); padding: 12px 0 0; margin-top: 20px; min-height: 44px; color: var(--accent); font-size: 11px; cursor: pointer; }
+  @media(max-width:580px) { .process-cards { grid-template-columns: 1fr; } .process-map { padding: 12px; } }
+  @media(prefers-reduced-motion:reduce) { .process-person, .process-step { transition: none; } }
+</style>

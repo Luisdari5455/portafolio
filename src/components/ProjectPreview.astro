@@ -1,0 +1,37 @@
+﻿---
+import { Activity, Scissors, Ticket } from '@lucide/astro';
+import type { Project } from '../data/projects';
+interface Props { project: Project; index: number; }
+const { project, index } = Astro.props;
+---
+<div class={`project-preview preview-${project.theme}`} aria-hidden="true">
+  <span class="preview-index">0{index + 1} / {project.category.toUpperCase()}</span>
+  <span class="preview-decoration"></span>
+  <div class={`mockup mockup-${project.id}`}>
+    <div class="mockup-bar"><span class="window-dots"><i></i><i></i><i></i></span><span>{project.title.toLowerCase()} / concepto visual</span></div>
+    {project.id === 'barberia' ? (
+      <div class="barber-concept">
+        <span class="mockup-eyebrow">BARBER STUDIO</span>
+        <strong>Tu estilo.<br /><em>Tu esencia.</em></strong>
+        <span class="concept-pill">BARBERÍA & ESTILO</span>
+        <Scissors class="scissors" stroke-width={1} />
+      </div>
+    ) : project.id === 'clinicas' ? (
+      <div class="clinic-concept">
+        <span class="mockup-eyebrow">SALUD + TECNOLOGÍA</span>
+        <strong>Un nuevo<br /><em>comienzo.</em></strong>
+        <span class="concept-pill">PRÓXIMAMENTE</span>
+        <div class="medical-cross"><span></span><span></span></div>
+        <Activity class="pulse-line" stroke-width={1.5} />
+      </div>
+    ) : project.id === 'eemq' ? (
+      <div class="ticket-concept">
+        <aside><Ticket size={18} /><i></i><i></i><i></i></aside>
+        <div class="ticket-content"><span class="mockup-eyebrow">EEMQ / WORKSPACE</span><strong>Sistema de tickets</strong><div class="ticket-columns">{['Recibidos', 'En proceso', 'Resueltos'].map((label, column) => <div><span>{label}</span>{[0, 1].map(row => <div class="ticket-placeholder"><i></i><b style={`width: ${55 + column * 10 - row * 8}%`}></b><b></b><small></small></div>)}</div>)}</div></div>
+      </div>
+    ) : (
+      <div class="arrsuc-concept"><span class="mockup-eyebrow">PROYECTO DIGITAL</span><strong>ARRSUC<span>®</span></strong><p>Ideas en movimiento.</p><div class="stack-shape"><i></i><i></i><i></i></div><span class="concept-pill">DISEÑO + CÓDIGO</span></div>
+    )}
+  </div>
+  <span class="preview-caption">CONCEPTO VISUAL · NO ES UNA CAPTURA DEL PRODUCTO</span>
+</div>

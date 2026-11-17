@@ -1,0 +1,9 @@
+﻿<button class="sound-control" type="button" data-sound-control hidden aria-pressed="false"><span aria-hidden="true">♫</span><span data-sound-idle>Activar ambiente</span><span data-sound-playing hidden>Silenciar sonido</span><span data-sound-error hidden>Reintentar sonido</span></button>
+<script>
+  import { setupWelcomeAudio } from '../scripts/welcome-audio';
+  setupWelcomeAudio();
+</script>
+<style>
+.sound-control { display:inline-flex; gap:8px; align-items:center; min-height:44px; border:0; padding:8px 0; background:none; color:var(--muted); cursor:pointer; font:inherit; }
+.sound-control > span:first-child, .sound-control[aria-pressed='true'] { color:var(--accent); }
+</style>

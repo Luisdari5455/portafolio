@@ -1,0 +1,58 @@
+﻿---
+import { ArrowUpRight, Mail } from '@lucide/astro';
+interface Props { email: string; name: string; }
+const { email, name } = Astro.props;
+---
+<details class="mail-art">
+  <summary aria-label="Abrir sobre de contacto">
+    <span class="envelope-stage" aria-hidden="true">
+      <span class="mail-orbit"></span>
+      <span class="envelope-back"></span>
+      <span class="envelope-flap"></span>
+      <span class="envelope-letter"><span class="letter-top">PARA: {name}</span><span class="letter-title">Hola, Luis.</span><span class="letter-line"></span><span class="letter-line short"></span><span class="letter-sign">Hagamos algo juntos ↗</span></span>
+      <span class="envelope-front"></span>
+      <span class="envelope-seal"><Mail size={22} stroke-width={1.4} /></span>
+      <span class="mail-spark spark-one">+</span><span class="mail-spark spark-two">+</span>
+    </span>
+    <span class="envelope-hint"><span class="hint-closed">Abre una conversación</span><span class="hint-open">Todo empieza con un hola</span><ArrowUpRight size={15} /></span>
+  </summary>
+  <div class="letter-action"><a href={`mailto:${email}`}><Mail size={16} />Escribir un correo<ArrowUpRight size={15} /></a><p>Se abrirá tu aplicación de correo.</p></div>
+</details>
+<style>
+  .mail-art { width: 100%; max-width: 290px; justify-self: center; }
+  summary { list-style: none; cursor: pointer; border-radius: 5px; }
+  summary::-webkit-details-marker { display: none; }
+  summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 8px; }
+  .envelope-stage { display: block; height: 250px; position: relative; perspective: 900px; isolation: isolate; }
+  .mail-orbit { position: absolute; inset: 20px 12px; border: 1px dashed var(--line); border-radius: 50%; transform: rotate(-20deg); z-index: -1; }
+  .envelope-back, .envelope-front { position: absolute; width: 220px; height: 140px; left: calc(50% - 110px); bottom: 32px; border: 1px solid var(--ink); border-radius: 4px; background: var(--surface); }
+  .envelope-back { box-shadow: 7px 7px 0 var(--line); }
+  .envelope-flap { position: absolute; left: calc(50% - 110px); bottom: 97px; width: 220px; height: 75px; background: var(--ink); clip-path: polygon(0 0, 100% 0, 50% 100%); transform-origin: top; transition: transform .5s ease, z-index 0s .25s; z-index: 4; }
+  .envelope-flap::after { content: ''; position: absolute; inset: 1px 2px 2px; background: var(--surface); clip-path: polygon(0 0, 100% 0, 50% 100%); }
+  .envelope-front { z-index: 3; clip-path: polygon(0 0, 50% 53%, 100% 0, 100% 100%, 0 100%); background: var(--paper); }
+  .envelope-front::after { content: ''; position: absolute; width: 160px; height: 160px; border: 1px solid var(--line); transform: rotate(45deg); left: 29px; top: 70px; }
+  .envelope-letter { position: absolute; width: 190px; height: 145px; bottom: 36px; left: calc(50% - 95px); border: 1px solid var(--ink); background: var(--paper); border-radius: 3px; padding: 15px; z-index: 2; transform: translateY(0); transition: transform .5s .1s; display: flex; flex-direction: column; gap: 9px; }
+  .letter-top { font: 7px monospace; color: var(--muted); overflow: hidden; white-space: nowrap; }
+  .letter-title { font-size: 22px; letter-spacing: -.04em; }
+  .letter-line { height: 1px; width: 90%; background: var(--line); }
+  .letter-line.short { width: 65%; }
+  .letter-sign { font-size: 8px; color: var(--accent); }
+  .envelope-seal { position: absolute; z-index: 5; bottom: 68px; left: calc(50% - 21px); display: grid; place-items: center; width: 42px; height: 42px; border: 1px solid var(--accent); border-radius: 50%; color: var(--accent); background: var(--paper); transition: opacity .3s, transform .3s; }
+  .mail-spark { position: absolute; color: var(--accent); font-size: 22px; font-weight: 300; transition: transform .5s; }
+  .spark-one { right: 12px; top: 40px; }
+  .spark-two { left: 6px; bottom: 60px; font-size: 15px; }
+  .envelope-hint { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 12px; color: var(--muted); }
+  .hint-open { display: none; }
+  .mail-art[open] .hint-open { display: inline; }
+  .mail-art[open] .hint-closed { display: none; }
+  .mail-art[open] .envelope-flap { transform: rotateX(180deg); z-index: 1; }
+  .mail-art[open] .envelope-letter { transform: translateY(-65px) rotate(-3deg); }
+  .mail-art[open] .envelope-seal { opacity: 0; transform: scale(.8); }
+  .mail-art[open] .mail-spark { transform: rotate(90deg); }
+  .letter-action { margin-top: 18px; text-align: center; }
+  .letter-action a { display: inline-flex; gap: 8px; align-items: center; font-size: 13px; padding: 9px 12px; border: 1px solid var(--line); border-radius: 4px; }
+  .letter-action a:hover { border-color: var(--accent); color: var(--accent); }
+  .letter-action p { font-size: 11px; color: var(--muted); margin-top: 8px; }
+  @media(hover:hover) { summary:hover .envelope-letter { transform: translateY(-18px); } .mail-art[open] summary:hover .envelope-letter { transform: translateY(-70px) rotate(-3deg); } }
+  @media(prefers-reduced-motion:reduce) { *, *::after { transition: none !important; } }
+</style>

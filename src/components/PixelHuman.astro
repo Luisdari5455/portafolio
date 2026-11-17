@@ -1,0 +1,10 @@
+﻿---
+interface Props { wave?: boolean; }
+const { wave = false } = Astro.props;
+const rows = ['000111110000','001111111000','001222121000','000222220000','000022200000','005333335000','055333335500','025333335200','002333332000','000333330000','000444440000','000440440000','000440440000','000440440000','001110111000','001110111000'];
+const palette: Record<string, string> = { '1': 'var(--ink)', '2': 'light-dark(#d8a47c, #edbd94)', '3': 'var(--accent)', '4': 'light-dark(#596c79, #8ea9b8)', '5': 'light-dark(#8b7865, #c4aa8c)' };
+---
+<g shape-rendering="crispEdges">
+  {rows.flatMap((row, y) => [...row].map((cell, x) => cell !== '0' && <rect x={x*2} y={y*2} width="2" height="2" fill={palette[cell]} />))}
+  {wave && <g class="pixel-wave"><path d="M22 15h4v-8h4v-5h-4v4h-4Z" fill="var(--accent)"/><path d="M26 1h4v5h-4Z" fill="light-dark(#d8a47c, #edbd94)"/></g>}
+</g>

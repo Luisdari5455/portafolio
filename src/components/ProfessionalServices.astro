@@ -1,0 +1,11 @@
+﻿---
+import { services } from '../data/services';
+import { profile } from '../data/profile';
+import { Code, Workflow, Smartphone, Database, Cloud, Wrench } from '@lucide/astro';
+const icons = [Code, Workflow, Smartphone, Database, Cloud, Wrench];
+---
+<section class="section" id="servicios-profesionales" aria-labelledby="services-title"><header class="section-head"><h2 class="section-title" id="services-title">Servicios profesionales</h2><p>Soluciones para equipos y negocios.</p></header><div class="service-grid">{services.map((service, i) => {const Icon = icons[i]; return <article><span class="service-icon"><Icon size={24} stroke-width={1.4}/></span><h3>{service.title}</h3><p>{service.description}</p><a href={`mailto:${profile.email}`}>Consultar este servicio <span aria-hidden="true">↗</span></a></article>;})}</div></section>
+<style>
+.service-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; }.service-grid article { padding:28px; border:1px solid var(--line); background:var(--paper); border-radius:4px; }.service-icon { color:var(--accent); }.service-grid h3 { font-size:19px; font-weight:500; line-height:1.4; margin:18px 0 12px; }.service-grid p { font-size:14px; line-height:1.8; color:var(--muted); }.service-grid a { display:inline-flex; gap:10px; align-items:center; margin-top:16px; min-height:44px; font-size:12px; color:var(--accent); }
+@media(max-width:580px) { .service-grid { grid-template-columns:minmax(0,1fr); }.service-grid article { padding:24px; } }
+</style>

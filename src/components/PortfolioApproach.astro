@@ -1,0 +1,48 @@
+﻿---
+import { ArrowRight, CircleCheck, CodeXml, Layers, Lightbulb, Plus } from '@lucide/astro';
+const steps = [
+  { number: '01', title: 'Entender antes de construir', tag: 'EL PUNTO DE PARTIDA', description: 'Definir el problema, las personas que usarán el producto y lo que realmente necesita resolver. Una buena interfaz empieza con buenas preguntas.', items: ['Contexto y objetivos', 'Necesidades del usuario', 'Alcance del proyecto'] },
+  { number: '02', title: 'Dar forma a la idea', tag: 'DE LO ABSTRACTO A LO VISIBLE', description: 'Organizar la información, explorar la dirección visual y pensar cómo se recorre cada pantalla. Cada decisión debe hacer la experiencia más clara.', items: ['Estructura de contenido', 'Exploración visual', 'Flujos y pantallas'] },
+  { number: '03', title: 'Construir con intención', tag: 'DONDE LAS IDEAS COBRAN VIDA', description: 'Convertir el diseño en componentes, conectar las interacciones y cuidar que la experiencia funcione en diferentes tamaños de pantalla.', items: ['Componentes reutilizables', 'Interacciones útiles', 'Diseño adaptable'] },
+  { number: '04', title: 'Revisar, ajustar, mejorar', tag: 'LOS DETALLES TAMBIÉN CUENTAN', description: 'Comprobar los recorridos, la navegación con teclado y el comportamiento de cada elemento. Publicar es un paso más para seguir aprendiendo.', items: ['Revisión de funcionalidades', 'Accesibilidad', 'Iteración y mejoras'] },
+];
+---
+<section id="enfoque" class="approach wrap" aria-labelledby="approach-title">
+  <div class="section-heading"><div><p class="eyebrow"><span class="eyebrow-num">03</span> Cómo trabajo</p><h2 class="section-title" id="approach-title">De la idea<br /><em>a la experiencia.</em></h2></div><p>Una forma de pensar el desarrollo: <br />entender, explorar, construir y mejorar.</p></div>
+  <div class="approach-layout">
+    <div class="process-art" aria-hidden="true">
+      <div class="process-orbit"></div><div class="process-orbit second"></div>
+      <span class="process-center"><Layers size={72} stroke-width={1.25} /></span>
+      <span class="process-sticker sticker-a"><Lightbulb size={16} /> una idea</span>
+      <span class="process-sticker sticker-b"><CodeXml size={16} /> código</span>
+      <span class="process-sticker sticker-c"><CircleCheck size={16} /> algo que funciona</span>
+      <span class="process-note">PENSAR <ArrowRight size={12} /> CREAR <ArrowRight size={12} /> MEJORAR</span>
+    </div>
+    <div class="process-steps">{steps.map((step, index) => <details name="process" open={index === 0}><summary><span class="step-number">{step.number}</span><span>{step.title}</span><span class="summary-icon step-plus" aria-hidden="true"><Plus size={16} /></span></summary><div class="step-body"><span class="step-tag">{step.tag}</span><p>{step.description}</p><ul>{step.items.map(item => <li>{item}</li>)}</ul></div></details>)}</div>
+  </div>
+</section>
+<style>
+  .approach { padding-block: 96px; border-top: 1px solid var(--line); }
+  .approach-layout { display: grid; grid-template-columns: .9fr 1.1fr; gap: 64px; align-items: center; margin-top: 36px; }
+  .process-art { min-height: 380px; position: relative; isolation: isolate; background: radial-gradient(ellipse, color-mix(in srgb, var(--lavender) 70%, transparent), transparent 68%); }
+  .process-orbit { position: absolute; width: 290px; height: 290px; border: 1px dashed var(--line-strong); border-radius: 50%; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+  .second { width: 210px; height: 210px; border-style: solid; }
+  .process-center { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: grid; place-items: center; width: 132px; height: 132px; border-radius: 36px; color: var(--on-accent-soft); background: var(--accent-soft); border: 1px solid var(--line-strong); box-shadow: 6px 8px 0 color-mix(in srgb, var(--accent) 22%, transparent); }
+  .process-sticker { position: absolute; display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--line-strong); padding: 10px 18px; border-radius: 10px; font-size: 14px; font-weight: 500; box-shadow: 0 9px 25px var(--shadow); }
+  .sticker-a { top: 25px; left: 18%; background: var(--peach); color: var(--peach-ink); transform: rotate(-9deg); }
+  .sticker-b { top: 46%; right: 0; background: var(--lavender); color: var(--lavender-ink); transform: rotate(10deg); font-family: var(--font-mono); }
+  .sticker-c { bottom: 52px; left: 0; background: var(--mint); color: var(--mint-ink); transform: rotate(-5deg); }
+  .process-note { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); display: inline-flex; align-items: center; gap: 10px; white-space: nowrap; font: 11px var(--font-mono); letter-spacing: .14em; color: var(--muted); }
+  .process-steps details { border-bottom: 1px solid var(--line); }
+  .process-steps summary { display: flex; align-items: center; gap: 20px; padding: 22px 0; list-style: none; cursor: pointer; font-size: 18px; font-weight: 600; letter-spacing: -.01em; }
+  summary::-webkit-details-marker { display: none; }
+  .step-number { font: 12px var(--font-mono); color: var(--accent); }
+  .step-plus { margin-left: auto; }
+  .step-body { padding: 0 0 24px 38px; }
+  .step-tag { font: 11px var(--font-mono); letter-spacing: .1em; color: var(--muted); }
+  .step-body p { font-size: 15px; color: var(--muted); margin-top: 10px; }
+  .step-body ul { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 0; list-style: none; }
+  .step-body li { font-size: 13px; background: var(--surface-2); padding: 5px 10px; border-radius: 6px; color: var(--muted); }
+  @media(max-width: 860px) { .approach-layout { gap: 25px; } .process-sticker { padding: 9px 13px; font-size: 13px; } .process-orbit { width: 230px; height: 230px; } .second { width: 160px; height: 160px; } }
+  @media(max-width: 580px) { .approach { padding-block: 56px; } .approach-layout { grid-template-columns: 1fr; gap: 20px; margin-top: 8px; } .process-art { min-height: 300px; } .process-steps summary { font-size: 16px; gap: 13px; } .step-body { padding-left: 30px; } }
+</style>

@@ -1,0 +1,12 @@
+﻿---
+import type { Project } from '../data/projects';
+interface Props { project: Project; }
+const { project } = Astro.props;
+---
+<details class="project-case"><summary>Ver detalles <span aria-hidden="true">+</span></summary><div class="case-body"><h4>Ficha del proyecto</h4><p>{project.detail}</p><h4>Funciones y alcance</h4>{project.features ? <ul>{project.features.map(feature => <li>{feature}</li>)}</ul> : <p>{project.id === 'clinicas' ? project.detail : 'Información ampliada pendiente de confirmar.'}</p>} {project.challenge && <><h4>Desafío técnico</h4><p>{project.challenge}</p></>}{project.solution && <><h4>Solución y responsabilidades</h4><p>{project.solution}</p></>}<h4>Resultados</h4><p>No se publican métricas ni resultados cuantitativos sin verificar.</p></div></details>
+<style>
+.project-case { margin-top:24px; border-block:1px solid var(--line); }
+summary { display:flex; justify-content:space-between; align-items:center; min-height:48px; cursor:pointer; font-size:13px; color:var(--accent); list-style:none; }
+summary::-webkit-details-marker { display:none; }summary span { font-size:20px; }details[open] summary span { transform:rotate(45deg); }
+.case-body { padding:0 0 24px; max-width:75ch; }.case-body h4 { margin:20px 0 8px; font-size:14px; font-weight:600; }.case-body p,.case-body li { font-size:14px; line-height:1.8; color:var(--muted); }.case-body ul { padding-left:20px; list-style:square; }
+</style>

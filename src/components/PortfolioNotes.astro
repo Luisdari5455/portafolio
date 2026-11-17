@@ -1,0 +1,51 @@
+---
+import { ArrowUpRight, Braces, Palette, Plus, Rocket } from '@lucide/astro';
+import { projects } from '../data/projects';
+---
+<section class="portfolio-notes wrap" aria-labelledby="notes-title">
+  <div class="section-heading"><div><p class="eyebrow"><span class="eyebrow-num">05</span> Notas del portafolio</p><h2 class="section-title" id="notes-title">Lo que hay detrás.<br /><em>Y lo que viene.</em></h2></div><p>Contexto, decisiones y un vistazo <br />al próximo capítulo.</p></div>
+  <div class="notes-grid">
+    <article class="launch-note"><div class="note-top"><span class="note-label">EN EL HORIZONTE</span><span class="launch-status"><i></i> Próximamente</span></div><h3>Un nuevo capítulo<br />para <em>Clínicas.</em></h3><p>Un proyecto para el sector de la salud que está próximo a salir. Por ahora, una primera presentación; los detalles llegarán con su lanzamiento.</p><a href="#title-clinicas" class="note-link">Conocer el proyecto <ArrowUpRight size={16} /></a><div class="launch-art" aria-hidden="true"><span><Plus size={170} stroke-width={3.5} /></span><i></i><b>CLÍNICAS / PRÓXIMAMENTE</b></div></article>
+    <article class="stack-note"><span class="note-label">CON QUÉ ESTÁ HECHO ESTE ESPACIO</span><h3>Pequeñas piezas.<br />Una experiencia completa.</h3><ul><li><span class="stack-letter"><Rocket size={18} /></span><div><strong>Astro</strong><p>Estructura y componentes.</p></div><span class="stack-category">BASE</span></li><li><span class="stack-letter"><Braces size={18} /></span><div><strong>TypeScript</strong><p>Interacciones y datos tipados.</p></div><span class="stack-category">LÓGICA</span></li><li><span class="stack-letter"><Palette size={18} /></span><div><strong>CSS</strong><p>Color, movimiento y perspectiva.</p></div><span class="stack-category">DISEÑO</span></li></ul><p class="stack-footnote">Las tecnologías de cada proyecto se añadirán a sus fichas cuando estén documentadas.</p></article>
+    <div class="directory-note"><div><span class="note-label">EL MAPA DE ESTE PORTAFOLIO</span><h3>Cuatro proyectos.<br />Distintos puntos de partida.</h3></div><div class="directory-links">{projects.map((project, index) => <a href={`#title-${project.id}`} data-project-jump={project.category}><span>0{index + 1}</span><strong>{project.title}</strong><small>{project.status}</small><ArrowUpRight size={16} /></a>)}</div></div>
+  </div>
+</section>
+<style>
+  .portfolio-notes { padding-block: 96px; }
+  .notes-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 24px; margin-top: 32px; }
+  .launch-note, .stack-note { padding: 30px; border-radius: 18px; border: 1px solid var(--line); position: relative; overflow: hidden; }
+  .launch-note { background: var(--mint); color: var(--mint-ink); border-color: color-mix(in srgb, var(--mint-ink) 18%, transparent); padding-bottom: 165px; }
+  .note-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .note-label { font: 11px/1.5 var(--font-mono); letter-spacing: .1em; color: var(--muted); }
+  .launch-note .note-label { color: inherit; }
+  .launch-status { font-size: 12px; font-weight: 500; display: flex; align-items: center; gap: 7px; color: var(--ok-ink); background: var(--surface); padding: 5px 10px; border-radius: 20px; }
+  .launch-status i { width: 5px; height: 5px; background: var(--ok); border-radius: 50%; }
+  .launch-note h3 { font-size: 36px; font-weight: 650; line-height: 1.1; letter-spacing: -.035em; margin: 28px 0 16px; color: var(--ink); }
+  .launch-note h3 em { color: var(--mint-ink); }
+  .launch-note p { font-size: 15px; max-width: 390px; }
+  .note-link { display: inline-flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 550; padding-block: 10px; color: var(--ink) !important; position: relative; z-index: 1; }
+  .launch-art { position: absolute; height: 150px; bottom: 0; left: 0; right: 0; overflow: hidden; }
+  .launch-art > span { position: absolute; right: 40px; top: -22px; color: color-mix(in srgb, var(--mint-ink) 35%, transparent); transform: rotate(13deg); line-height: 0; }
+  .launch-art i { position: absolute; width: 260px; height: 260px; border: 1px solid color-mix(in srgb, var(--mint-ink) 22%, transparent); border-radius: 50%; right: -30px; top: -65px; box-shadow: 0 0 0 35px color-mix(in srgb, var(--mint-ink) 7%, transparent); }
+  .launch-art b { position: absolute; bottom: 24px; left: 30px; font: 400 11px var(--font-mono); letter-spacing: .14em; }
+  .stack-note { background: var(--surface-2); }
+  .stack-note h3 { font-size: 24px; line-height: 1.2; letter-spacing: -.025em; margin-top: 20px; font-weight: 650; }
+  .stack-note ul { margin: 24px 0; padding: 0; list-style: none; }
+  .stack-note li { display: flex; gap: 14px; align-items: center; padding-block: 16px; border-bottom: 1px solid var(--line-strong); }
+  .stack-letter { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 10px; background: var(--surface); color: var(--accent); }
+  .stack-note strong { font-size: 15px; font-weight: 600; }
+  .stack-note li p { font-size: 13px; color: var(--muted); margin: 0; }
+  .stack-category { font: 11px var(--font-mono); letter-spacing: .1em; margin-left: auto; color: var(--muted); }
+  .stack-footnote { font-size: 13px; color: var(--muted); margin-bottom: 0; }
+  .directory-note { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1.5fr; gap: 45px; border: 1px solid var(--line); border-radius: 18px; padding: 30px; background: var(--surface); }
+  .directory-note h3 { font-size: 24px; line-height: 1.2; font-weight: 650; letter-spacing: -.025em; margin-top: 18px; }
+  .directory-links a { display: flex; align-items: center; gap: 16px; padding: 15px 0; border-bottom: 1px solid var(--line); transition: padding .3s var(--ease), color .2s; }
+  .directory-links a:last-child { border: 0; }
+  .directory-links a:hover { padding-left: 8px; color: var(--accent); }
+  .directory-links a > span { font: 12px var(--font-mono); color: var(--muted); }
+  .directory-links strong { font-size: 16px; font-weight: 600; }
+  .directory-links small { font-size: 13px; color: var(--muted); margin-left: auto; }
+  .directory-links :global(svg) { color: var(--muted); }
+  @media(max-width: 860px) { .launch-note, .stack-note { padding-inline: 24px; } .launch-note h3 { font-size: 30px; } .note-top { align-items: flex-start; flex-direction: column; gap: 8px; } }
+  @media(max-width: 580px) { .portfolio-notes { padding-block: 56px; } .notes-grid { grid-template-columns: 1fr; } .directory-note { grid-template-columns: 1fr; gap: 10px; padding: 25px; } .launch-note { padding-bottom: 155px; } .directory-links a { gap: 12px; } }
+</style>

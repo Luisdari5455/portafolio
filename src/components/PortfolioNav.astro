@@ -1,0 +1,36 @@
+﻿---
+import { Menu, Moon, Sun, X } from '@lucide/astro';
+import { profile } from '../data/profile';
+import PixelMark from './PixelMark.astro';
+
+interface Props { hasContact: boolean; }
+const { hasContact } = Astro.props;
+const links = [
+  { id: 'proyectos', label: 'Proyectos' },
+  { id: 'trayectoria', label: 'Trayectoria' },
+  { id: 'stack', label: 'Stack' },
+  { id: 'laboratorio-3d', label: 'Lab 3D' },
+  { id: 'sobre-mi', label: 'Sobre mí' },
+  { id: 'servicios-profesionales', label: 'Servicios' },
+  ...(hasContact ? [{ id: 'contacto', label: 'Contacto' }] : []),
+];
+---
+<header class="site-nav" data-nav>
+  <div class="nav-inner wrap">
+    <a class="brand" href="/"><span class="nav-pixel-mark" aria-hidden="true"><PixelMark /></span>{profile.shortName || profile.name || 'Portafolio'}</a>
+    <nav id="nav-menu" class="nav-links" aria-label="Navegación principal">
+      {links.map((link, index) => <a href={`#${link.id}`} data-nav-link={link.id}><span class="nav-link-index" aria-hidden="true">0{index + 1}</span>{link.label}</a>)}
+    </nav>
+    <div class="nav-actions"><button class="icon-button" type="button" data-open-welcome aria-label="Personalizar" title="Personalizar" hidden><span aria-hidden="true">▦</span></button>
+      <button class="icon-button theme-toggle" type="button" aria-label="Cambiar a modo oscuro" title="Cambiar a modo oscuro" data-theme-toggle hidden>
+        <Moon class="icon-moon" size={18} /><Sun class="icon-sun" size={18} />
+      </button>
+      <button class="icon-button menu-toggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-menu" data-menu-toggle>
+        <Menu class="icon-menu" size={20} /><X class="icon-close" size={20} />
+      </button>
+    </div>
+  </div>
+</header>
+
+
+

@@ -1,0 +1,32 @@
+﻿---
+import { profile } from '../data/profile';
+---
+<form class="contact-form" data-contact-form data-email={profile.email}>
+ <div class="contact-form-fields"><label><span>Nombre</span><input name="name" autocomplete="name" required maxlength="100" /></label><label><span>Tu correo</span><input type="email" name="email" autocomplete="email" required maxlength="254" /></label></div>
+ <label><span>Mensaje</span><textarea name="message" rows="5" required minlength="10" maxlength="3000"></textarea></label>
+ <p>Este formulario abre tu aplicación de correo con el mensaje preparado. No envía datos a un servidor.</p>
+ <button class="button button-primary" type="submit" data-contact-submit hidden>Preparar correo <span aria-hidden="true">↗</span></button>
+ <p role="status" data-contact-feedback hidden>Si no se abrió tu aplicación, utiliza el enlace de correo de arriba.</p>
+ <noscript><a href={`mailto:${profile.email}`}>{profile.email}</a></noscript>
+</form>
+<script>
+import { translateCopy } from "../i18n/portfolio";
+document.querySelectorAll<HTMLFormElement>('[data-contact-form]').forEach(form => {
+ form.querySelector<HTMLButtonElement>('[data-contact-submit]')!.hidden = false;
+ form.addEventListener('input', event => { const field = event.target; if (field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement) field.setCustomValidity(''); });
+ form.addEventListener('submit', event => {
+  event.preventDefault(); if (!form.reportValidity()) return;
+  const fields = new FormData(form);
+  const name = String(fields.get('name') ?? '').trim();
+  const message = String(fields.get('message') ?? '').trim();
+  if (!name || message.length < 10) { const field = form.elements.namedItem(!name ? 'name' : 'message') as HTMLInputElement | HTMLTextAreaElement; field.setCustomValidity(translateCopy(!name ? 'Escribe tu nombre.' : 'Escribe al menos 10 caracteres de mensaje.', document.documentElement.lang === 'en' ? 'en' : 'es')); field.reportValidity(); return; }
+  const subject = `Portfolio / ${name}`;
+  const body = `${name}\n${fields.get('email')}\n\n${message}`;
+  window.location.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  form.querySelector<HTMLElement>('[data-contact-feedback]')!.hidden = false;
+ });
+});
+</script>
+<style>
+.contact-form { margin-top:36px; grid-column:1 / -1; max-width:960px; width:100%; border-top:1px solid var(--line); padding-top:28px; }.contact-form-fields { display:grid; grid-template-columns:1fr 1fr; gap:20px; }label { display:grid; gap:8px; font-size:12px; margin-bottom:20px; }input,textarea { width:100%; min-width:0; padding:12px; border:1px solid var(--line); border-radius:3px; background:var(--paper); color:var(--ink); font:inherit; font-size:16px; }textarea { resize:vertical; }p { font-size:12px; color:var(--muted); line-height:1.7; margin-bottom:16px; }button { cursor:pointer; }[role='status'] { margin-top:16px; color:var(--accent); }@media(max-width:580px) { .contact-form-fields { grid-template-columns:1fr; gap:0; } }
+</style>

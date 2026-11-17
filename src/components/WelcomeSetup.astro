@@ -1,0 +1,56 @@
+﻿---
+import PixelMark from './PixelMark.astro';
+import WelcomeSound from './WelcomeSound.astro';
+---
+<dialog class="welcome-dialog" data-welcome aria-labelledby="welcome-title" aria-describedby="welcome-description">
+  <div class="welcome-top"><span>LC / PORTFOLIO</span><button type="button" data-welcome-close aria-label="Cerrar bienvenida">×</button></div>
+  <div class="pixel-stage" aria-hidden="true"><div class="pixel-avatar pixel-monogram"><PixelMark /></div><span class="pixel-orbit orbit-a">+</span><span class="pixel-orbit orbit-b">+</span><span class="pixel-floor"></span></div>
+  <div class="welcome-loading" data-welcome-loading><p role="status">Preparando tu espacio…</p><div class="pixel-loading" aria-hidden="true">{Array.from({ length: 8 }, (_, i) => <span style={`--pixel: ${i}`}></span>)}</div></div>
+  <div data-welcome-options hidden>
+    <p class="welcome-kicker">TU VISITA, A TU MANERA</p><h2 id="welcome-title">Hola. Ponte cómodo.</h2><p id="welcome-description">Elige cómo quieres explorar mi portafolio.</p>
+    <fieldset><legend>01 / Idioma</legend><div class="welcome-choices"><label><input type="radio" name="visit-language" value="es" checked /><span><b>ES</b> Español</span></label><label><input type="radio" name="visit-language" value="en" /><span><b>EN</b> English</span></label></div></fieldset>
+    <fieldset><legend>02 / Apariencia</legend><div class="welcome-choices"><label><input type="radio" name="visit-theme" value="light" checked /><span><b aria-hidden="true">☀</b><span>Claro</span></span></label><label><input type="radio" name="visit-theme" value="dark" /><span><b aria-hidden="true">☾</b><span>Oscuro</span></span></label></div></fieldset>
+    <WelcomeSound /><div class="welcome-preview"><span class="preview-pixel" aria-hidden="true"></span><span>Así se verá tu espacio.</span><span aria-hidden="true">↗</span></div>
+    <button class="button button-primary welcome-enter" type="button" data-welcome-enter>Entrar al portafolio <span aria-hidden="true">↗</span></button><p class="welcome-footnote">Puedes cambiarlo cuando quieras en Personalizar.</p>
+  </div>
+</dialog>
+<style>
+  .welcome-dialog { color: var(--ink); background: var(--paper); width: min(450px, calc(100% - 32px)); max-height: calc(100dvh - 32px); padding: 25px 30px; border: 1px solid var(--ink); border-radius: 4px; box-shadow: 8px 8px 0 var(--accent); overflow-y: auto; overscroll-behavior: contain; }
+  .welcome-dialog::backdrop { background: #080706a6; backdrop-filter: blur(7px); }
+  .welcome-top { display: flex; justify-content: space-between; align-items: center; font: 10px monospace; letter-spacing: 2px; color: var(--muted); }
+  .welcome-top button { border: 1px solid var(--line); background: transparent; width: 36px; height: 36px; cursor: pointer; font-size: 24px; }
+  .pixel-stage { height: 100px; position: relative; display: grid; place-items: center; margin-block: 12px 20px; }
+  .pixel-avatar { width: 56px; display: grid; grid-template-columns: repeat(3, 16px); gap: 4px; transform: rotate(-8deg); animation: pixel-float 2.5s steps(6) infinite; }
+  .pixel-avatar i { height: 16px; background: var(--ink); box-shadow: 3px 3px 0 var(--line); }
+  .pixel-avatar i:nth-child(2), .pixel-avatar i:nth-child(8) { background: var(--accent); }
+  .pixel-avatar i:nth-child(5) { opacity: 0; }
+  .pixel-orbit { position: absolute; font: 22px monospace; color: var(--accent); }
+  .orbit-a { left: 22%; top: 8px; }.orbit-b { right: 20%; bottom: 5px; }
+  .pixel-floor { position: absolute; bottom: 0; width: 96px; border-bottom: 2px dashed var(--line); }
+  .welcome-kicker { font: 9px monospace; letter-spacing: 1.7px; color: var(--accent); }
+  .welcome-dialog h2 { font-size: 29px; font-weight: 600; letter-spacing: -1px; margin-block: 10px; }
+  #welcome-description { font-size: 14px; color: var(--muted); }
+  fieldset { border: 0; padding: 0; margin: 24px 0 0; min-width: 0; }
+  legend { font: 11px monospace; color: var(--muted); padding: 0; margin-bottom: 10px; }
+  .welcome-choices { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .welcome-choices label { position: relative; cursor: pointer; }
+  .welcome-choices input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .welcome-choices label > span { display: flex; align-items: center; gap: 10px; border: 1px solid var(--line); padding: 12px; font-size: 14px; min-height: 48px; }
+  .welcome-choices b { font: 11px monospace; color: var(--muted); }
+  input:checked + span { border-color: var(--accent); box-shadow: inset 3px 0 0 var(--accent); background: var(--surface); }
+  input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .welcome-preview { padding: 15px 0; display: flex; align-items: center; gap: 10px; margin-top: 20px; border-block: 1px dashed var(--line); color: var(--muted); font: 10px monospace; }
+  .welcome-preview > span:last-child { margin-left: auto; }
+  .preview-pixel { width: 8px; height: 8px; background: var(--accent); box-shadow: 3px 3px 0 var(--line); }
+  .welcome-enter { width: 100%; margin-top: 20px; cursor: pointer; }
+  .welcome-footnote { font-size: 11px; color: var(--muted); text-align: center; margin-top: 12px; }
+  .welcome-loading { text-align: center; padding-block: 30px; font: 12px monospace; color: var(--muted); }
+  .pixel-loading { display: flex; gap: 5px; justify-content: center; margin-top: 24px; }
+  .pixel-loading span { width: 16px; height: 16px; background: var(--accent); animation: pixel-load .8s steps(2) infinite; animation-delay: calc(var(--pixel) * .09s); }
+  @keyframes pixel-load { 50% { opacity: .2; } }
+  @keyframes pixel-float { 50% { transform: translateY(-8px) rotate(4deg); } }
+  @media(max-height: 750px) { .pixel-stage { height: 65px; margin-block: 8px 12px; } .pixel-avatar { scale: .8; } fieldset { margin-top: 16px; } .welcome-dialog { padding: 18px 24px; } }
+  @media(prefers-reduced-motion:reduce) { .pixel-avatar, .pixel-loading span { animation: none; } }
+  :global(body:has(.welcome-dialog[open])) { overflow: hidden; }
+.pixel-avatar.pixel-monogram { display: block; width: 76px; color: var(--accent); } .pixel-monogram :global(svg) { display: block; width: 100%; height: auto; filter: drop-shadow(3px 3px 0 var(--line)); }</style>
+

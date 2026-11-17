@@ -1,0 +1,85 @@
+﻿---
+const thoughts = [
+  { text: 'Avanza con valentía; no caminas solo.', source: 'Josué 1:9 · Paráfrasis' },
+  { text: 'En Cristo encuentro fuerzas para seguir adelante.', source: 'Filipenses 4:13 · Paráfrasis' },
+  { text: 'Haz tu trabajo con todo el corazón.', source: 'Colosenses 3:23 · Paráfrasis' },
+  { text: 'Un pequeño avance también es progreso.', source: 'Una idea para hoy' },
+  { text: 'Aprende, construye, comparte. Vuelve a empezar.', source: 'Una idea para hoy' },
+];
+---
+<div class="code-thought" data-thought>
+  <div class="thought-toolbar"><span class="thought-dots" aria-hidden="true">▪ ▪ ▪</span><span>mindset.ts</span><span class="thought-branch">main ↗</span></div>
+  <div class="code-runner" data-code-runner aria-hidden="true"><p><span>$</span> init --profile=luis-cotoc</p><p><span>&gt;</span> compiling ideas...</p><p><span>✓</span> ready to create</p></div><div class="thought-code"><span class="thought-line-number" aria-hidden="true">01<br />02<br />03</span><div><p><span class="syntax-keyword">const</span> inspiration = &#123;</p><div class="thought-phrases" aria-live="polite" aria-atomic="true">{thoughts.map((thought, index) => <div data-thought-item hidden={index !== 0}><p class="thought-string"><span>message: </span><span aria-hidden="true">&quot;</span><span>{thought.text}</span><span aria-hidden="true">&quot;</span></p><p class="thought-source">// <span>{thought.source}</span></p></div>)}</div><p>&#125;;<span class="thought-caret" aria-hidden="true">▌</span></p></div></div>
+  <div class="thought-footer"><span>Fe, propósito y código.</span><button type="button" data-replay-code hidden><span>Repetir efecto</span><span aria-hidden="true">⌘</span></button><button type="button" data-next-thought hidden><span>Otra inspiración</span><span aria-hidden="true">↻</span></button></div>
+</div>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-thought]').forEach(terminal => {
+    const items = [...terminal.querySelectorAll<HTMLElement>('[data-thought-item]')];
+    const button = terminal.querySelector<HTMLButtonElement>('[data-next-thought]');
+    if (!button) return;
+    const runner = terminal.querySelector<HTMLElement>('[data-code-runner]');
+    const replay = terminal.querySelector<HTMLButtonElement>('[data-replay-code]');
+    const motion = matchMedia('(prefers-reduced-motion: reduce)');
+    let hasPlayed = false;
+    let replayFrame = 0;
+    const play = () => {
+      if (!runner || motion.matches || document.hidden) return;
+      cancelAnimationFrame(replayFrame);
+      runner.classList.remove('is-typing');
+      replayFrame = requestAnimationFrame(() => {
+        replayFrame = requestAnimationFrame(() => runner.classList.add('is-typing'));
+      });
+      hasPlayed = true;
+    };
+    if (replay) { replay.hidden = motion.matches; replay.addEventListener('click', play); }
+    motion.addEventListener('change', () => {
+      cancelAnimationFrame(replayFrame);
+      runner?.classList.remove('is-typing');
+      if (replay) replay.hidden = motion.matches;
+    });
+    const maybePlay = () => {
+      const rect = terminal.getBoundingClientRect();
+      if (!hasPlayed && document.documentElement.classList.contains('boot-done') && rect.top < innerHeight && rect.bottom > 0) play();
+    };
+    const observer = new IntersectionObserver(entries => {
+      if (entries.some(entry => entry.isIntersecting)) { maybePlay(); if (hasPlayed) observer.disconnect(); }
+    });
+    observer.observe(terminal);
+    document.addEventListener('portfolio:booted', maybePlay, { once: true });
+    let current = 0;
+    button.hidden = false;
+    button.addEventListener('click', () => {
+      current = (current + 1) % items.length;
+      items.forEach((item, index) => { item.hidden = index !== current; });
+    });
+  });
+</script>
+<style>
+  .code-thought { margin-top: 32px; max-width: 680px; background: var(--surface); border: 1px solid var(--line); border-radius: 5px; box-shadow: 5px 5px 0 var(--line); font: 12px/1.8 ui-monospace, Consolas, monospace; }
+  .thought-toolbar { display: flex; align-items: center; gap: 13px; padding: 10px 16px; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 10px; }
+  .thought-dots { letter-spacing: 2px; color: var(--accent); }.thought-branch { margin-left: auto; }
+  .thought-code { display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 12px; padding: 18px 16px; }
+  .thought-line-number { color: var(--muted); opacity: .6; user-select: none; }
+  .syntax-keyword { color: var(--accent); }
+  .thought-phrases { padding-left: 12px; min-height: 65px; }
+  .thought-string { color: var(--ink); overflow-wrap: anywhere; }
+  .thought-source { color: var(--muted); font-size: 10px; margin-top: 5px; }
+  .thought-caret { color: var(--accent); margin-left: 5px; }
+  .thought-footer { border-top: 1px solid var(--line); padding: 8px 14px; display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: 10px; color: var(--muted); }
+  .thought-footer button { display: inline-flex; gap: 10px; align-items: center; cursor: pointer; background: transparent; border: 0; padding: 10px 4px; min-height: 40px; font: inherit; }
+  .thought-footer button:hover { color: var(--accent); }
+  @media(prefers-reduced-motion:no-preference) { [data-thought-item]:not([hidden]) { animation: code-appear .4s steps(8) both; } }
+  @keyframes code-appear { from { opacity: .2; transform: translateY(3px); } to { opacity: 1; transform: none; } }
+  @media(max-width:580px) { .code-thought { font-size: 11px; } .thought-code { gap: 6px; padding: 14px 10px; } .thought-footer { flex-wrap: wrap; } }
+  .code-runner { padding: 13px 16px; border-bottom: 1px dashed var(--line); font-size: 10px; color: var(--muted); }
+  .code-runner p { width: fit-content; max-width: 100%; overflow-wrap: anywhere; }
+  .code-runner p > span { color: var(--accent); margin-right: 8px; }
+  .code-runner.is-typing p { animation: terminal-type .75s steps(26) both; }
+  .code-runner.is-typing p:nth-child(2) { animation-delay: .75s; }
+  .code-runner.is-typing p:nth-child(3) { animation-delay: 1.5s; }
+  .thought-footer { flex-wrap: wrap; }
+  @keyframes terminal-type { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+  @media(prefers-reduced-motion:reduce) { .code-runner.is-typing p { animation: none; } }
+</style>
+
+

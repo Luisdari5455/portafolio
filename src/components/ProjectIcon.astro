@@ -1,0 +1,8 @@
+---
+// One icon per project, keyed by its id in src/data/projects.ts. Unknown ids get a folder.
+import { Folder, Layers, Scissors, Stethoscope, Ticket } from '@lucide/astro';
+interface Props { id: string; }
+const icons: Record<string, typeof Folder> = { barberia: Scissors, clinicas: Stethoscope, eemq: Ticket, arrsuc: Layers };
+const Icon = icons[Astro.props.id] ?? Folder;
+---
+<Icon size={20} stroke-width={1.75} />

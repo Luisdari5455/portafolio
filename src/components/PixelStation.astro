@@ -1,0 +1,42 @@
+﻿---
+import PixelHuman from './PixelHuman.astro';
+interface Props { index: number; }
+const { index } = Astro.props;
+---
+<svg viewBox="0 0 240 160" shape-rendering="crispEdges" aria-hidden="true" focusable="false">
+  <g stroke="var(--line)" fill="none"><path d="M12 138h216M20 145h35m10 0h74m35 0h35"/><path d="M18 42h14m-7-7v14M211 26h10m-5-5v10"/><rect x="193" y="65" width="5" height="5"/></g>
+  {index === 0 ? <g>
+    <path d="M50 37h139v90H50Z" fill="var(--surface)" stroke="var(--ink)"/>
+    <path d="M57 44h125v65H57Z" fill="var(--paper)" stroke="var(--line)"/>
+    <path d="M62 49h115v9H62Z" fill="var(--line)"/>
+    <rect x="65" y="65" width="34" height="32" fill="var(--station-soft)"/><path d="M107 67h54m-54 9h43m-43 9h52m-52 10h30" stroke="var(--accent)" stroke-width="3"/>
+    <g class="station-result"><path d="m72 81 6 6 13-15" fill="none" stroke="var(--accent)" stroke-width="3"/></g>
+    <rect x="111" y="127" width="18" height="8" fill="var(--ink)"/><path d="M93 137h54" stroke="var(--ink)" stroke-width="3"/>
+    <path d="M148 115h17m7 0h5" stroke="var(--accent)" stroke-width="2"/>
+  </g> : index === 1 ? <g>
+    <path d="M77 27h88v111H77Z" fill="var(--surface)" stroke="var(--ink)"/>
+    {[36, 67, 98].map(y => <g><rect x="84" y={y} width="74" height="24" fill="var(--paper)" stroke="var(--line)"/><path d={`M94 ${y+8}h35m-35 7h24`} stroke="var(--muted)" stroke-width="2"/><rect class="station-led" x="145" y={y+9} width="5" height="5" fill="var(--accent)"/></g>)}
+    <path d="M40 70h36m90 34h35V70h-15" stroke="var(--line)" fill="none" stroke-width="2"/><rect class="station-packet" x="38" y="67" width="7" height="7" fill="var(--accent)"/>
+    <g class="station-result"><path d="m182 39 7 7 14-16" fill="none" stroke="var(--accent)" stroke-width="3"/></g>
+  </g> : <g>
+    <path d="M58 45h12V32h19V20h38v12h26v13h13v20H58Z" fill="var(--station-soft)" stroke="var(--ink)"/>
+    <path d="M110 66v28m-35-17h70" stroke="var(--muted)" stroke-dasharray="4 4"/>
+    <g class="station-packet"><rect x="107" y="72" width="7" height="7" fill="var(--accent)"/></g>
+    <path d="M66 100h94v30H66Z" fill="var(--surface)" stroke="var(--ink)"/><path d="M73 106h80v15H73Z" fill="var(--paper)" stroke="var(--line)"/>
+    <path d="M80 111h30m-30 5h18" stroke="var(--muted)"/><rect class="station-led" x="141" y="111" width="5" height="5" fill="var(--accent)"/>
+    <g class="station-result"><path d="m181 82 6 6 14-16" fill="none" stroke="var(--accent)" stroke-width="3"/></g>
+  </g>}
+  <g class="station-player" transform="translate(19 106)"><PixelHuman /></g>
+</svg>
+<style>
+  svg { display: block; width: 100%; max-height: 210px; }
+  .station-result { opacity: 0; transition: opacity .2s; }
+  :global(.stack-panel.is-active) .station-result { opacity: 1; }
+  :global(.stack-panel.is-active) .station-packet { animation: packet .8s steps(5) 3; }
+  :global(.stack-panel.is-active) .station-led { animation: led .7s steps(2) 3; }
+  :global(.stack-panel.is-active) .station-player { animation: player .8s steps(4) 1; }
+  @keyframes packet { 50% { translate: 22px 0; } }
+  @keyframes led { 50% { opacity: .2; } }
+  @keyframes player { 50% { translate: 5px -8px; } }
+  @media(prefers-reduced-motion:reduce) { .station-result { transition: none; } .station-packet, .station-led, .station-player { animation: none !important; } }
+</style>
